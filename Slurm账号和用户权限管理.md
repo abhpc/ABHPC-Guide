@@ -27,11 +27,11 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
     # slassoc
        Cluster    Account       User                  QOS  Partition       GrpTRES
     ---------- ---------- ---------- -------------------- ---------- -------------
-    abhpc-ai         root                          normal                          
-    abhpc-ai         root       root               normal                          
-    abhpc-ai   tensorflow                          normal                          
-    abhpc-ai   tensorflow      abhpc               normal                          
-    abhpc-ai   tensorflow       lily               normal
+      abhpc-ai       root                          normal                          
+      abhpc-ai       root       root               normal                          
+      abhpc-ai tensorflow                          normal                          
+      abhpc-ai tensorflow      abhpc               normal                          
+      abhpc-ai tensorflow       lily               normal
 
 ### 2. 节点和队列
 
