@@ -1,1 +1,7 @@
 #! /bin/bash
+#SBATCH --job-name=test
+#SBATCH --nodes=1
+#SBATCH --ntasks=16
+#SBATCH --partition=SLURM
+
+mpirun -np $SLURM_NTASKS vasp > $SLURM_JOB_NAME.sta
