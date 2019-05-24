@@ -26,8 +26,8 @@ done
 # 生成nodelist结束
 
 # 通过MPI运行fds
-# intel parallel studio 2019: I_MPI_FABRICS=tcp/ofi, 2017版本则是I_MPI_FABRICS_LIST=tcp/ofi
-mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID fds $SLURM_JOB_NAME.fds > $SLURM_JOB_NAME.sta
+# intel parallel studio 2019: I_MPI_FABRICS=ofi, 2017版本则是I_MPI_FABRICS_LIST=tcp或ofi
+mpirun -genv I_MPI_FABRICS=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID fds $SLURM_JOB_NAME.fds > $SLURM_JOB_NAME.sta
 
 # 运行完后清理nodelist
 rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
