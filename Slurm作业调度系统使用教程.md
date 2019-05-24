@@ -18,4 +18,21 @@
 
     $ scancel -u $USER
 
-### 4.查看队列情况
+### 4.查看节点情况
+
+    # shosts
+    HOSTNAME STATE      CPUS    CPUS(A/I/O/T) FREE_MEM   REASON GRES
+    C01      idle       20          0/20/0/20    52609     none gpu:rtx2080:2
+    C02      idle       20          0/20/0/20    53734     none gpu:rtx2080:2
+    C03      idle       20          0/20/0/20    53692     none gpu:rtx2080:2
+    C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
+
+CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。
+
+### 5.查看队列(Partition)状态
+
+    # spartitions
+    PARTITION  AVAIL    PRIO_TIER    MAX_CPUS_PER_NODE      NODES(A/I/O/T)
+    E5-2640V4* up       100          20                            0/4/0/4
+
+NODES(A/I/O/T)分别代表节点的Allocated/Idle/Other/Total个数。
