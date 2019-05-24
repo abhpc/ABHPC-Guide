@@ -28,7 +28,7 @@ done
 # 生成nodelist结束
 
 # 通过MPI运行fds
-mpirun -genv I_MPI_FABRICS_LIST=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID fds $SLURM_JOB_NAME.fds > $SLURM_JOB_NAME.sta
+mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID fds $SLURM_JOB_NAME.fds > $SLURM_JOB_NAME.sta
 
 # 运行完后清理nodelist
 rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
