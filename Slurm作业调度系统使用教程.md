@@ -27,7 +27,8 @@
     C03      idle       20          0/20/0/20    53692     none gpu:rtx2080:2
     C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
 
-CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。
+CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。这样可以判断哪些节点是可用
+的，最大能提交多少核、多少节点。
 
 ### 5.查看队列(Partition)状态
 
@@ -35,4 +36,5 @@ CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。
     PARTITION  AVAIL    PRIO_TIER    MAX_CPUS_PER_NODE      NODES(A/I/O/T)
     E5-2640V4* up       100          20                            0/4/0/4
 
-NODES(A/I/O/T)分别代表节点的Allocated/Idle/Other/Total个数。
+NODES(A/I/O/T)分别代表节点的Allocated/Idle/Other/Total个数。这样可以判断哪些队列是可
+用的，最大能提交多少核、多少节点。
