@@ -20,7 +20,7 @@
 
 ### 4.查看节点情况
 
-    # shosts
+    # slhosts
     HOSTNAME STATE      CPUS    CPUS(A/I/O/T) FREE_MEM   REASON GRES
     C01      idle       20          0/20/0/20    52609     none gpu:rtx2080:2
     C02      idle       20          0/20/0/20    53734     none gpu:rtx2080:2
