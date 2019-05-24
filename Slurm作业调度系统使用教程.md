@@ -2,6 +2,8 @@
 
     $ sbatch [作业脚本].slm
 
+常用的slurm脚本可以在[这里下载](常用slurm脚本)。
+
 ### 2.查看作业
 
     $ squeue
