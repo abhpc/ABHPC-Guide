@@ -1,5 +1,3 @@
-### 1. 账户（Account）和用户（User）
-
 在进行管理之前，必须知道Slurm调度系统分为两个基本层面：Account（账户）和User（用户）。
 基于这两个基本层面，Slurm形成了“关联”(Assoc)。
 
@@ -11,7 +9,9 @@ Account类似于group的概念，是由多个User（用户）组成，在大集�
 User则落实到具体的某个用户，除了可以在Account上对全体用户进行限制外，还可以单独限制某个
 用户的最大资源。
 
-#### 显示全部关联关系：
+#### 使用sacctmgr查看关联关系：
+
+##### 查看全部关联关系
 
     # sacctmgr list assoc
        Cluster    Account       User  Partition     Share GrpJobs       GrpTRES GrpSubmit     GrpWall   GrpTRESMins MaxJobs       MaxTRES MaxTRESPerNode MaxSubmit     MaxWall   MaxTRESMins             QOS   Def QOS GrpTRESRunMin
@@ -21,6 +21,8 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
       abhpc-ai tensorflow                               1                                                                                                                                                  normal                         
       abhpc-ai tensorflow      abhpc                    1                                                                                                                                                  normal                         
       abhpc-ai tensorflow       lily                    1                                                                                                                                                  normal                         
+
+###### slassoc命令
 
 这样显示未免过于凌乱，可以使用以下命令简洁地输出关联信息：
 
@@ -32,8 +34,3 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
       abhpc-ai tensorflow                          normal                          
       abhpc-ai tensorflow      abhpc               normal                          
       abhpc-ai tensorflow       lily               normal
-
-### 2. 节点和队列
-
-
-### 3. GRES与GPU调度
