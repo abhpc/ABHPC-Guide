@@ -28,4 +28,26 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
       abhpc-ai tensorflow      abhpc               normal                          
       abhpc-ai tensorflow       lily               normal
 
-####
+#### 新建Account
+
+通过以下命令可以查看到add account部分的参数：
+
+    # sacctmgr --help
+    ......
+    add account        - Clusters=, DefaultQOS=, Description=, Fairshare=,
+                         GrpTRESMins=, GrpTRES=, GrpJobs=, GrpMemory=,   
+                         GrpNodes=, GrpSubmitJob=, GrpWall=, MaxTRESMins=,
+                         MaxTRES=, MaxJobs=, MaxNodes=, MaxSubmitJobs=,
+                         MaxWall=, Names=, Organization=, Parent=,      
+                         and QosLevel=                                  
+    modify account     - (set options) DefaultQOS=, Description=,       
+                         Fairshare=, GrpTRESMins=, GrpTRESRunMins=,       
+                         GrpTRES=, GrpJobs=, GrpMemory=, GrpNodes=,     
+                         GrpSubmitJob=, GrpWall=, MaxTRESMins=, MaxTRES=,
+                         MaxJobs=, MaxNodes=, MaxSubmitJobs=, MaxWall=,
+                         Names=, Organization=, Parent=, and QosLevel=  
+                         RawUsage= (with admin privileges only)         
+                         (where options) Clusters=, DefaultQOS=,        
+                         Descriptions=, Names=, Organizations=,         
+                         Parent=, and QosLevel=
+    ......
