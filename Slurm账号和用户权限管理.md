@@ -14,7 +14,7 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
 #### 显示全部关联关系：
 
     # sacctmgr list assoc
-      Cluster    Account       User  Partition     Share GrpJobs       GrpTRES GrpSubmit     GrpWall   GrpTRESMins MaxJobs       MaxTRES MaxTRESPerNode MaxSubmit     MaxWall   MaxTRESMins             QOS   Def QOS GrpTRESRunMin
+       Cluster    Account       User  Partition     Share GrpJobs       GrpTRES GrpSubmit     GrpWall   GrpTRESMins MaxJobs       MaxTRES MaxTRESPerNode MaxSubmit     MaxWall   MaxTRESMins             QOS   Def QOS GrpTRESRunMin
     ---------- ---------- ---------- ---------- --------- ------- ------------- --------- ----------- ------------- ------- ------------- -------------- --------- ----------- ------------- -------------------- --------- -------------
       abhpc-ai       root                               1                                                                                                                                                  normal                         
       abhpc-ai       root       root                    1                                                                                                                                                  normal                         
