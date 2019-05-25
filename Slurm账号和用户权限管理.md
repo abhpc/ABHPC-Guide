@@ -51,3 +51,35 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
                          Descriptions=, Names=, Organizations=,         
                          Parent=, and QosLevel=
     ......
+
+新建一个account的命令如下：
+
+    # sacctmgr add account [账号名称]
+
+#### 添加用户到指定的Account
+
+通过以下命令可以查看到add user部分的参数：
+
+    # sacctmgr --help
+    ......
+    add user           - Accounts=, AdminLevel=, Clusters=,             
+                         DefaultAccount=, DefaultQOS=, DefaultWCKey=,   
+                         Fairshare=, MaxTRESMins=, MaxTRES=,            
+                         MaxJobs=, MaxNodes=, MaxSubmitJobs=, MaxWall=,
+                         Names=, Partitions=, and QosLevel=             
+    modify user        - (set options) AdminLevel=, DefaultAccount=,    
+                         DefaultQOS=, DefaultWCKey=, Fairshare=,        
+                         MaxTRESMins=, MaxTRES=, MaxJobs=, MaxNodes=,   
+                         MaxSubmitJobs=, MaxWall=, NewName=,            
+                         and QosLevel=,                                 
+                         RawUsage= (with admin privileges only)         
+                         (where options) Accounts=, AdminLevel=,        
+                         Clusters=, DefaultAccount=, Names=,            
+                         Partitions=, and QosLevel=
+    ......
+
+添加用户到指定的Account（例如tensorflow）：
+
+    # sacctmgr add user account=tensorflow
+
+    
