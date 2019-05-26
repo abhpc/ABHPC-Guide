@@ -78,8 +78,12 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
                          Partitions=, and QosLevel=
     ......
 
-添加用户到指定的Account（例如tensorflow）：
+##### 添加用户到指定的Account（例如tensorflow）：
 
     # sacctmgr add user account=tensorflow
 
-    
+##### 修改用户属性
+
+    # sacctmgr modify user [用户名] set [属性]=[设定值]
+
+用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html)。
