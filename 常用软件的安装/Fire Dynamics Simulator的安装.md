@@ -1,6 +1,6 @@
 ### Fire Dynamics Simulator(FDS)的安装
 
-本例子以安装FDS 6.7.5为例
+本例子以安装FDS 6.7.1为例
 
 #### 1. 软件简介
 
@@ -16,7 +16,7 @@ Smokeview (SMV) is a visualization program used to display the output of FDS and
 
 该软件依赖于Intel Parallel Studio 2017, 在安装之前需要首先安装好这个软件。
 
-##### 2.2 下载并安装FDS 6.7.5
+##### 2.2 下载并安装FDS 6.7.1
 
 下载地址：https://github.com/firemodels/fds/releases
 
