@@ -144,4 +144,14 @@ NOTE: This limit only applies fully when using the Select Consumable Resource pl
 
 ### 4. 管理员计费系统
 
-如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时
+如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时，在[用户教程](Slurm用户教程)中已经提供了用户机时的统计方法，但同一Account下的其他用户的作业是互相不可见的，因此，作为管理员可以对单个用户计费，也可以对整个Account进行机时计费，以下举例说明。
+
+##### 4.1 对用户lily自2019年1月1日0时起使用的机时进行统计：
+
+    # sacct -u lily -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
+
+##### 4.2 对名为tensorflow的account自2019年1月1日0时起使用的机时进行统计：
+
+    # sacct -A tensorflow -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
+
+注意这里的机时单位都是秒，换算成核时需要除以3600。
