@@ -86,4 +86,4 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
 
     # sacctmgr modify user [用户名] set [属性]=[设定值]
 
-用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html){:target="_blank"}。
+用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html)。
