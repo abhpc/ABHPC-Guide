@@ -81,3 +81,5 @@ Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0�
 如果要统计自己使用的机时，则可以使用如下命令(也即使用awk将第6列的cputimeraw加起来)：
 
     $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
+
+注意这里的输出单位是秒，换算成机时还需要除以3600。
