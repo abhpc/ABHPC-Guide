@@ -4,7 +4,9 @@ Account类似于group的概念，是由多个User（用户）组成，在大集�
 
 User则落实到具体的某个用户，除了可以在Account上对全体用户进行限制外，还可以单独限制某个用户的最大资源。
 
-### 1. 查看全部关联关系
+### 1. 查看关联关系
+
+##### 1.1 查看全部关联关系
 
     # sacctmgr list assoc
        Cluster    Account       User  Partition     Share GrpJobs       GrpTRES GrpSubmit     GrpWall   GrpTRESMins MaxJobs       MaxTRES MaxTRESPerNode MaxSubmit     MaxWall   MaxTRESMins             QOS   Def QOS GrpTRESRunMin
@@ -15,7 +17,7 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
       abhpc-ai tensorflow      abhpc                    1                                                                                                                                                  normal                         
       abhpc-ai tensorflow       lily                    1                                                                                                                                                  normal                         
 
-### 2. slassoc命令
+##### 1.2 slassoc命令
 
 全部显示关联未免过于凌乱，可以使用以下命令简洁地输出关联信息：
 
@@ -28,9 +30,9 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
       abhpc-ai tensorflow      abhpc               normal                          
       abhpc-ai tensorflow       lily               normal
 
-### 3. 新建Account
+### 2. Account和User的管理
 
-通过以下命令可以查看到add account部分的参数：
+通过以下命令可以查看到Account管理的参数：
 
     # sacctmgr --help
     ......
@@ -52,13 +54,7 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
                          Parent=, and QosLevel=
     ......
 
-新建一个account的命令如下：
-
-    # sacctmgr add account [账号名称]
-
-### 4. 添加用户到指定的Account
-
-通过以下命令可以查看到add user部分的参数：
+同样通过以下命令可以查看到add user部分的参数：
 
     # sacctmgr --help
     ......
@@ -78,6 +74,14 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
                          Partitions=, and QosLevel=
     ......
 
+##### 2.1 新建一个account的命令如下：
+
+    # sacctmgr add account [账号名称]
+
+##### 2.2 添加用户到指定的Account
+
+
+
 ##### 4.1 添加用户到指定的Account（例如tensorflow）：
 
     # sacctmgr add user account=tensorflow
@@ -88,4 +92,4 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
 
 用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html)。
 
-#### 5.
+### 5.
