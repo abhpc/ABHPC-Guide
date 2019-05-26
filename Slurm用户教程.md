@@ -20,7 +20,7 @@
 
 ### 4. 查看节点情况
 
-    # slhosts
+    $ slhosts
     HOSTNAME STATE      CPUS    CPUS(A/I/O/T) FREE_MEM   REASON GRES
     C01      idle       20          0/20/0/20    52609     none gpu:rtx2080:2
     C02      idle       20          0/20/0/20    53734     none gpu:rtx2080:2
@@ -32,7 +32,7 @@ CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。这样可以�
 
 ### 5. 查看队列(Partition)状态
 
-    # spartitions
+    $ spartitions
     PARTITION  AVAIL    PRIO_TIER    MAX_CPUS_PER_NODE      NODES(A/I/O/T)
     E5-2640V4* up       100          20                            0/4/0/4
 
@@ -47,9 +47,9 @@ Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0�
 
 查看历史作业信息使用sacct命令进行查看，时间范围通过"-S"指定起始时间，"-E"指定结束时间。默认起始时间是当日0时，默认结束时间是当前时间。
 
-查看lily用户自2019年1月1日至今的作业情况：
+查看用户自2019年1月1日至今的作业情况：
 
-    # sacct -S 2019-01-01T00:00:00 -u lily -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X
+    $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X
            JobID  Partition    Account      User  AllocCPUS CPUTimeRAW      State                                                      WorkDir
     ------------ ---------- ---------- --------- ---------- ---------- ----------        -----------------------------------------------------
     52            E5-2640V4 tensorflow      lily         80         80  COMPLETED                                          /home/lily/fds-test
@@ -77,3 +77,7 @@ Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0�
     74            E5-2640V4 tensorflow      lily         80          0 CANCELLED+                                         /home/lily/fds-test2
 
 以上各列分别对应作业ID，队列，账户，用户，CPU开销，机时(单位秒)，状态，工作路径。
+
+如果要统计自己使用的机时，则可以使用如下命令(也即使用awk将第6列的cputimeraw加起来)：
+
+    $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
