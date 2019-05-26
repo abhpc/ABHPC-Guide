@@ -95,3 +95,28 @@ Account和User的权限使用GrpTRES来进行限制：
 GrpTRES=<TRES=max TRES,...>  
 Maximum number of TRES running jobs are able to be allocated in aggregate for this association and all associations which are children of this association. To clear a previously set value use the modify command with a new value of -1 for each TRES id.  
 NOTE: This limit only applies fully when using the Select Consumable Resource plugin.
+
+例如，限制lily用户的CPU核数为40，节点数为2，GPU最大使用为4：
+
+    # sacctmgr modify user lily set Grptres="cpu=40,node=2,gres/gpu=4"
+    # slassoc
+       Cluster    Account       User                  QOS  Partition                        GrpTRES
+    ---------- ---------- ---------- -------------------- ---------- ------------------------------
+      abhpc-ai       root                          normal
+      abhpc-ai       root       root               normal
+      abhpc-ai tensorflow                          normal
+      abhpc-ai tensorflow      abhpc               normal
+      abhpc-ai tensorflow       lily               normal                  cpu=40,gres/gpu=4,node=2
+
+重置全部限制则为：
+
+    # sacctmgr modify user lily set Grptres="cpu=-1,node=-1,gres/gpu=-1"
+       Cluster    Account       User                  QOS  Partition                        GrpTRES
+    ---------- ---------- ---------- -------------------- ---------- ------------------------------
+      abhpc-ai       root                          normal
+      abhpc-ai       root       root               normal
+      abhpc-ai tensorflow                          normal
+      abhpc-ai tensorflow      abhpc               normal
+      abhpc-ai tensorflow       lily               normal                  
+
+同样，可以对整个Account进行限制，其含义是Account包含的全部用户累计总和不得超过最大限制。
