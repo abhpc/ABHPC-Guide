@@ -78,18 +78,14 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
 
     # sacctmgr add account [账号名称]
 
-##### 2.2 添加用户到指定的Account
-
-
-
-##### 4.1 添加用户到指定的Account（例如tensorflow）：
+##### 2.2 添加用户到指定的Account（例如tensorflow）：
 
     # sacctmgr add user account=tensorflow
 
-##### 4.2 修改用户属性
+##### 2.3 修改用户属性
 
     # sacctmgr modify user [用户名] set [属性]=[设定值]
 
 用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html)。
 
-### 5.
+### 3. Account和User的权限管理
