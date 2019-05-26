@@ -35,4 +35,4 @@ Smokeview (SMV) is a visualization program used to display the output of FDS and
     # FDS
     source /opt/FDS/FDS6/bin/FDS6VARS.sh
 
-这样全部用户都可以使用了，仍然在登录的用户未必能够马上生效，需要登出一次，然后再登入即可生效。FDS的作业脚本[参见这里](常用slurm脚本/fds.slm)。
+这样全部用户都可以使用了，仍然在登录的用户未必能够马上生效，需要登出一次，然后再登入即可生效。FDS的作业脚本[参见这里](../常用slurm脚本/fds.slm)。
