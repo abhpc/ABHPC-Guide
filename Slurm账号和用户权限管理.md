@@ -141,3 +141,7 @@ NOTE: This limit only applies fully when using the Select Consumable Resource pl
       abhpc-ai tensorflow                          normal
       abhpc-ai tensorflow      abhpc               normal
       abhpc-ai tensorflow       lily               normal
+
+### 4. 管理员计费系统
+
+如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时
