@@ -83,3 +83,36 @@ Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0�
     $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
 
 注意这里的输出单位是秒，换算成机时还需要除以3600。
+
+除了直接使用sacct命令，还可以使用slhist命令。例如用户lily执行以下命令的输出为：
+
+    $ slhist -S 2019-01-01T00:00:00
+           JobID  Partition    Account      User  AllocCPUS           CPUTimeRAW                State                                            WorkDir
+    ------------ ---------- ---------- --------- ---------- -------------------- -------------------- --------------------------------------------------
+    52            E5-2640V4 tensorflow      lily         80                   80 COMPLETED            /home/lily/fds-test                                
+    53            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    54            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    55            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    56            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    57            E5-2640V4 tensorflow      lily          4                    0 COMPLETED            /home/lily/fds-test                                
+    58            E5-2640V4 tensorflow      lily        160                    0 CANCELLED by 1002    /home/lily/fds-test                                
+    59            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    60            E5-2640V4 tensorflow      lily         80                    0 COMPLETED            /home/lily/fds-test                                
+    61            E5-2640V4 tensorflow      lily         80                    0 FAILED               /home/lily/fds-test                                
+    62            E5-2640V4 tensorflow      lily         80                 2640 CANCELLED by 1002    /home/lily/fds-test                                
+    63            E5-2640V4 tensorflow      lily         80                 5360 CANCELLED by 1002    /home/lily/fds-test                                
+    64            E5-2640V4 tensorflow      lily         80                 7680 CANCELLED            /home/lily/fds-test                                
+    65            E5-2640V4 tensorflow      lily         80                18480 CANCELLED            /home/lily/fds-test                                
+    66            E5-2640V4 tensorflow      lily         80                 3040 CANCELLED            /home/lily/fds-test                                
+    67            E5-2640V4 tensorflow      lily         80                 7920 CANCELLED by 1002    /home/lily/fds-test                                
+    68            E5-2640V4 tensorflow      lily         80                10960 CANCELLED by 1002    /home/lily/fds-test                                
+    69            E5-2640V4 tensorflow      lily         80                 5040 CANCELLED by 1002    /home/lily/fds-test                                
+    70            E5-2640V4 tensorflow      lily         80                  800 COMPLETED            /home/lily/fds-test                                
+    71            E5-2640V4 tensorflow      lily         80                  880 COMPLETED            /home/lily/fds-test                                
+    72            E5-2640V4 tensorflow      lily         80                  800 COMPLETED            /home/lily/fds-test                                
+    73            E5-2640V4 tensorflow      lily         80                19760 CANCELLED by 1002    /home/lily/fds-test                                
+    74            E5-2640V4 tensorflow      lily         80                    0 CANCELLED by 1002    /home/lily/fds-test2
+
+同样，对第6列求和可以得到该段时间内的总机时：
+
+    $ slhist -S 2019-01-01T00:00:00 |awk 'BEGIN{total=0}{total+=$6}END{print total}'
