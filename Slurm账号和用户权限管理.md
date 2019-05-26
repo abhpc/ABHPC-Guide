@@ -92,6 +92,6 @@ User则落实到具体的某个用户，除了可以在Account上对全体用户
 
 Account和User的权限使用GrpTRES来进行限制：
 
-GrpTRES=<TRES=max TRES,...>
-Maximum number of TRES running jobs are able to be allocated in aggregate for this association and all associations which are children of this association. To clear a previously set value use the modify command with a new value of -1 for each TRES id.
+GrpTRES=<TRES=max TRES,...>  
+Maximum number of TRES running jobs are able to be allocated in aggregate for this association and all associations which are children of this association. To clear a previously set value use the modify command with a new value of -1 for each TRES id.  
 NOTE: This limit only applies fully when using the Select Consumable Resource plugin.
