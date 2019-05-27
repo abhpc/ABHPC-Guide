@@ -113,6 +113,6 @@ Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0�
     73            E5-2640V4 tensorflow      lily         80                            19760 CANCELLED by 1002    /home/lily/fds-test                                
     74            E5-2640V4 tensorflow      lily         80                                0 CANCELLED by 1002    /home/lily/fds-test2
 
-同样，对第6列求和可以得到该段时间内的总机时：
+同样，对第7列求和可以得到该段时间内的总机时：
 
-    $ slhist -S 2019-01-01T00:00:00 |awk 'BEGIN{total=0}{total+=$6}END{print total}'
+    $ slhist -S 2019-01-01T00:00:00 |awk 'BEGIN{total=0}{total+=$7}END{print total}'
