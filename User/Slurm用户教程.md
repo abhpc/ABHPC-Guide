@@ -31,10 +31,17 @@ CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。这样可以�
 的，最大能提交多少核、多少节点。
 
 ### 5. 查看队列(Partition)状态
-
-    $ spartitions
-    PARTITION  AVAIL    PRIO_TIER    MAX_CPUS_PER_NODE      NODES(A/I/O/T)
-    E5-2640V4* up       100          20                            0/4/0/4
+```
+$ spartitions
+PARTITION  AVAIL    PRIO_TIER    MAX_CPUS_PER_NODE      NODES(A/I/O/T)
+E5-2640V4* up       100          20                            0/4/0/4
+```
+或者
+```
+$ sinfo 
+PARTITION   AVAIL  NODES  CPUS  STATE    GRES             NODELIST
+E5-2678V3*     up      5    24  idle     (null)           C[01-05]
+```
 
 NODES(A/I/O/T)分别代表节点的Allocated/Idle/Other/Total个数。这样可以判断哪些队列是可
 用的，最大能提交多少核、多少节点。

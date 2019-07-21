@@ -1,0 +1,27 @@
+#! /bin/bash
+# 这里指定作业名称，注意vasp的输入文件无需特意指定
+#SBATCH --job-name=test
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=E5-2640V4
+
+# 使用多少个节点
+#SBATCH --nodes=4
+
+# 每个节点使用多少核
+#SBATCH --ntasks-per-node=20
+
+# 指定VASP程序路径
+ABAQUS_EXE="/opt/simulia/Commands/abaqus"
+
+# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
+
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 运行ABAQUS
+$ABAQUS_EXE mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID $LMP_EXE -in $SLURM_JOB_NAME.in -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
+
+# 运行完后清理nodelist
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
