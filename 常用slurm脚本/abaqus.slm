@@ -1,8 +1,8 @@
 #! /bin/bash
-# 这里指定作业名称，注意vasp的输入文件无需特意指定
+# 这里指定作业名称，这里设置为test，意味着输入文件为test.inp
 #SBATCH --job-name=test
 
-# 提交到哪个队列（分区）
+# 提交到哪个队列（分区）,通过sinfo命令查看
 #SBATCH --partition=E5-2640V4
 
 # 使用多少个节点
@@ -11,16 +11,11 @@
 # 每个节点使用多少核
 #SBATCH --ntasks-per-node=20
 
-# 指定VASP程序路径
+# 指定ABAQUS程序路径
 ABAQUS_EXE="/opt/simulia/Commands/abaqus"
 
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
-
-# 错误和输出文件
-#SBATCH --error=%j.err
-#SBATCH --output=%j.out
-
-NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_JOB_CPUS_PER_NODE]
-
+NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
+export MPI_IC_ORDER=TCP
 # 运行ABAQUS
 $ABAQUS_EXE job=$SLURM_JOB_NAME cpus=$NPROCS ask_delete=OFF mp_mode=mpi $ADD_ARGS int > $LSB_JOBNAME.log
