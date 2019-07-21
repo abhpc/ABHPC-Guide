@@ -155,3 +155,8 @@ NOTE: This limit only applies fully when using the Select Consumable Resource pl
     # sacct -A tensorflow -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
 
 注意这里的机时单位都是秒，换算成核时需要除以3600。
+
+也可以通过sreport命令来进行机时统计，这里默认的单位是分钟。例如，统计ame用户从2019年1月1日起的全部机时：
+```
+sreport cluster AccountUtilizationByUser start=2019-01-01 user=ame
+```
