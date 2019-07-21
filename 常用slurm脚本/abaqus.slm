@@ -17,5 +17,6 @@ ABAQUS_EXE="/opt/simulia/Commands/abaqus"
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
 NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
 export MPI_IC_ORDER=TCP
+unset SLURM_GTIDS
 # 运行ABAQUS
 $ABAQUS_EXE job=$SLURM_JOB_NAME cpus=$NPROCS ask_delete=OFF mp_mode=mpi $ADD_ARGS int > $LSB_JOBNAME.log
