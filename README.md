@@ -20,10 +20,7 @@
 
 ### 2.集群管理员
 
-##### 新建集群用户:
-[CentOS 7](Admin/CentOS_7/新建集群用户.md)
-
-[Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
+##### 新建集群用户: [CentOS 7](Admin/CentOS_7/新建集群用户.md)     [Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
 
 [Slurm管理教程](Admin/Slurm管理教程.md)
 
