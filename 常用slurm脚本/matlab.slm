@@ -6,10 +6,10 @@
 #SBATCH --partition=E5-2640V4
 
 # 使用多少个节点
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 
 # 每个节点使用多少核
-#SBATCH --ntasks-per-node=20
+#SBATCH --ntasks-per-node=10
 
 # 指定VASP程序路径
 MATLAB_EXE="/opt/MATLAB/R2018a/bin/matlab"
