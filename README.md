@@ -20,10 +20,12 @@
 
 ### 2.集群管理员
 
-[新建集群用户](Admin/新建集群用户.md)
+##### 新建集群用户:
+[CentOS 7](Admin/CentOS_7/新建集群用户.md)
+[Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
 
 [Slurm管理教程](Admin/Slurm管理教程.md)
 
-[配置服务器的远程桌面](Admin/配置服务器的远程桌面.md)
+[配置服务器的远程MATE桌面](Admin/配置服务器的远程MATE桌面.md)
 
 [常用软件的安装](常用软件的安装)
