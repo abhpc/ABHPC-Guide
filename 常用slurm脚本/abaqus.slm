@@ -21,7 +21,4 @@ ABAQUS_EXE="/opt/simulia/Commands/abaqus"
 #SBATCH --output=%j.out
 
 # 运行ABAQUS
-$ABAQUS_EXE mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID $LMP_EXE -in $SLURM_JOB_NAME.in -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
-
-# 运行完后清理nodelist
-rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+$ABAQUS_EXE job=$SLURM_JOB_NAME cpus=$SLURM_CPUS_ON_NODE ask_delete=OFF mp_mode=mpi $ADD_ARGS int > $LSB_JOBNAME.log
