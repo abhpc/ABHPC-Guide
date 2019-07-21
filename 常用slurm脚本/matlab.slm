@@ -11,6 +11,10 @@
 # 每个节点使用多少核
 #SBATCH --ntasks-per-node=10
 
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
 # 指定VASP程序路径
 MATLAB_EXE="/opt/MATLAB/R2018a/bin/matlab"
 

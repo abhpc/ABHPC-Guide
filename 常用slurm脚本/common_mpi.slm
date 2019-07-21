@@ -14,6 +14,10 @@
 # 每个节点使用多少核
 #SBATCH --ntasks-per-node=20
 
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
 # MPI程序命令，这里写mpirun后的ARGS即可
 # 例如，单机上运行命令为mpirun -np 2 a.out -in xxx.in
 # 这里MPI_CMD则写作“a.out -in xxx.in”

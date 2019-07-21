@@ -11,6 +11,10 @@
 # 每个节点使用多少核
 #SBATCH --ntasks-per-node=20
 
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
 # 指定VASP程序路径
 LMP_EXE="/opt/lammps/bin/lammps-cpu-12Dec18"
 
