@@ -19,6 +19,16 @@
 ABAQUS_EXE="/opt/simulia/Commands/abaqus"
 
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
+rm -rf $PWD/abaqus_v6.env
+cp /opt/simulia/6.14-2/SMA/site/abaqus_v6.env $PWD/abaqus_v6.env
+node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)
+mp_host_list="["
+for host in ${node_list}; do
+    mp_host_list="${mp_host_list}['$host', ${SLURM_CPUS_ON_NODE}],"
+done
+mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")
+echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
+
 NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
 rm -rf $SLURM_JOB_NAME.lck
 export MPI_IC_ORDER=TCP
