@@ -35,3 +35,4 @@ export MPI_IC_ORDER=TCP
 unset SLURM_GTIDS
 # 运行ABAQUS
 $ABAQUS_EXE job=$SLURM_JOB_NAME cpus=$NPROCS ask_delete=OFF mp_mode=mpi $ADD_ARGS int > $LSB_JOBNAME.log
+rm -rf $PWD/abaqus_v6.env
