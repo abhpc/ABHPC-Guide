@@ -24,7 +24,7 @@ cp /opt/simulia/6.14-2/SMA/site/abaqus_v6.env $PWD/abaqus_v6.env
 node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)
 mp_host_list="["
 for host in ${node_list}; do
-    mp_host_list="${mp_host_list}['$host', ${SLURM_CPUS_ON_NODE}],"
+    mp_host_list="${mp_host_list}['$host', ${SLURM_NTASKS_PER_NODE}],"
 done
 mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")
 echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
