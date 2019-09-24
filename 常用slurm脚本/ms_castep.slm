@@ -1,0 +1,46 @@
+#!/bin/bash
+#BSUB -J Layer
+#BSUB -n 96
+#BSUB -q AMD-Pay
+
+# Compute step
+STEP=""
+#====================   Do NOT revise any lines if you do not know their meanings    =====================================================================
+#=========================================================================================================================================================
+
+#BSUB -o %J.out
+#BSUB -e %J.err
+CURDIR=$PWD
+rm -rf $CURDIR/nodelist.$LSB_JOBID >& /dev/null
+
+for i in `echo $LSB_HOSTS`
+do
+	echo $i >> $CURDIR/nodelist.$LSB_JOBID
+done
+
+uniq $CURDIR/nodelist.$LSB_JOBID > $CURDIR/nodelist-tmp.$LSB_JOBID
+for i in `cat $CURDIR/nodelist-tmp.$LSB_JOBID`
+do
+       	CORES=`cat $CURDIR/nodelist.$LSB_JOBID|grep $i|wc -l`
+	echo "$i:$CORES" >> $CURDIR/nodelist-tmp2.$LSB_JOBID
+done
+mv $CURDIR/nodelist-tmp2.$LSB_JOBID $CURDIR/nodelist.$LSB_JOBID
+rm -rf $CURDIR/nodelist-tmp.$LSB_JOBID
+
+source /opt/Acceltys/LicensePack/etc/lp_profile
+export PSPOT_DIR=/opt/Acceltys/MaterialsStudio8.0/share/Resources/Quantum/Castep/Potentials
+
+mpirun -genv I_MPI_FABRICS_LIST=tcp -machinefile $CURDIR/nodelist.$LSB_JOBID  castepexe.exe  $LSB_JOBNAME
+rm -rf *.pid
+
+for i in $STEP
+do
+        cp ${LSB_JOBNAME}.check ${LSB_JOBNAME}_${i}.check
+        mpirun -genv I_MPI_FABRICS_LIST=tcp -machinefile $CURDIR/nodelist.$LSB_JOBID castepexe.exe  ${LSB_JOBNAME}_${i}
+        rm -rf *.pid
+done
+
+rm -rf $CURDIR/nodelist.$LSB_JOBID
+
+rm -rf *.check
+rm -rf *.orbitals
