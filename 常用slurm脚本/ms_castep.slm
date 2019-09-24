@@ -1,46 +1,49 @@
-#!/bin/bash
-#BSUB -J Layer
-#BSUB -n 96
-#BSUB -q AMD-Pay
+#! /bin/bash
+# 这里指定作业名称，注意vasp的输入文件无需特意指定
+#SBATCH --job-name=test
 
-# Compute step
+# 提交到哪个队列（分区）
+#SBATCH --partition=E5-2640V4
+
+# 使用多少个节点
+#SBATCH --nodes=4
+
+# 每个节点使用多少核
+#SBATCH --ntasks-per-node=20
+
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 选择CASTEP版本
+module load ms/8.0
+
+# 指定计算的STEP
 STEP=""
-#====================   Do NOT revise any lines if you do not know their meanings    =====================================================================
-#=========================================================================================================================================================
 
-#BSUB -o %J.out
-#BSUB -e %J.err
-CURDIR=$PWD
-rm -rf $CURDIR/nodelist.$LSB_JOBID >& /dev/null
+# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
 
-for i in `echo $LSB_HOSTS`
+# 以下生成MPI的nodelist
+CURDIR=`pwd`
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
+for i in $NODES
 do
-	echo $i >> $CURDIR/nodelist.$LSB_JOBID
+	echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
 done
+# 生成nodelist结束
 
-uniq $CURDIR/nodelist.$LSB_JOBID > $CURDIR/nodelist-tmp.$LSB_JOBID
-for i in `cat $CURDIR/nodelist-tmp.$LSB_JOBID`
-do
-       	CORES=`cat $CURDIR/nodelist.$LSB_JOBID|grep $i|wc -l`
-	echo "$i:$CORES" >> $CURDIR/nodelist-tmp2.$LSB_JOBID
-done
-mv $CURDIR/nodelist-tmp2.$LSB_JOBID $CURDIR/nodelist.$LSB_JOBID
-rm -rf $CURDIR/nodelist-tmp.$LSB_JOBID
-
-source /opt/Acceltys/LicensePack/etc/lp_profile
-export PSPOT_DIR=/opt/Acceltys/MaterialsStudio8.0/share/Resources/Quantum/Castep/Potentials
-
-mpirun -genv I_MPI_FABRICS_LIST=tcp -machinefile $CURDIR/nodelist.$LSB_JOBID  castepexe.exe  $LSB_JOBNAME
+mpirun -genv I_MPI_FABRICS_LIST=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID  castepexe.exe  $SLURM_JOB_NAME
 rm -rf *.pid
 
 for i in $STEP
 do
-        cp ${LSB_JOBNAME}.check ${LSB_JOBNAME}_${i}.check
-        mpirun -genv I_MPI_FABRICS_LIST=tcp -machinefile $CURDIR/nodelist.$LSB_JOBID castepexe.exe  ${LSB_JOBNAME}_${i}
+        cp ${SLURM_JOB_NAME}.check ${SLURM_JOB_NAME}_${i}.check
+        mpirun -genv I_MPI_FABRICS_LIST=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID castepexe.exe  ${SLURM_JOB_NAME}_${i}
         rm -rf *.pid
 done
 
-rm -rf $CURDIR/nodelist.$LSB_JOBID
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
 
 rm -rf *.check
 rm -rf *.orbitals
