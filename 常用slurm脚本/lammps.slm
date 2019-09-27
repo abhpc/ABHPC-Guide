@@ -1,22 +1,26 @@
-#! /bin/bash
+#!/bin/bash
 # 这里指定作业名称，注意vasp的输入文件无需特意指定
 #SBATCH --job-name=test
 
 # 提交到哪个队列（分区）
-#SBATCH --partition=E5-2640V4
+#SBATCH --partition=E5-2630V2
 
 # 使用多少个节点
-#SBATCH --nodes=4
+#SBATCH --nodes=2
 
-# 每个节点使用多少核
-#SBATCH --ntasks-per-node=20
+# 每个节点使用多少核 强烈注意：核数必须为该队列单个节点的核数
+#SBATCH --ntasks-per-node=12
 
-# 错误和输出文件
+# 生成错误和输出文件
 #SBATCH --error=%j.err
 #SBATCH --output=%j.out
 
-# 指定VASP程序路径
-LMP_EXE="/opt/lammps/bin/lammps-cpu-12Dec18"
+# 使用module加载lammps
+module load lammps/12Dec18-impi
+
+# 指定LAMMPS程序路径，在此选择使用CPU或者GPU运算
+# HW=cpu or HW=gpu
+HW="cpu"
 
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
 
@@ -26,12 +30,28 @@ rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
 NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
 for i in $NODES
 do
-	echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
+echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
 done
 # 生成nodelist结束
 
-# 通过MPI运行LAMMPS
-mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID $LMP_EXE -in $SLURM_JOB_NAME.in -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
+# 通过MPI运行LAMMPS: CPU or GPU
+if [ "$HW" = "cpu" ];then
+	mpirun -genv I_MPI_FABRICS=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID lammps-$HW -in $SLURM_JOB_NAME.in -sf omp -pk omp 1 -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
+elif [ "$HW" = "gpu" ];then
+	if [ "$SLURM_JOB_PARTITION" = "E5-2678V3" ]; then
+		PK_NUM=2
+	elif [ "$SLURM_JOB_PARTITION" = "E5-2630V2" ]; then
+		PK_NUM=3
+	else
+		PK_NUM=2
+		echo "Unkown partition, set gpu package number to 2" > $SLURM_JOB_NAME.slm.error
+	fi
+	mpirun -machinefile $CURDIR/nodelist.$SLURM_JOB_ID GPU-PRERUN
+	mpirun -genv I_MPI_FABRICS=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID lammps-$HW -in $SLURM_JOB_NAME.in -sf gpu -pk gpu $PK_NUM  -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
+else
+	echo "Error: The hardware should be defined as cpu or gpu in slurm scripts!" > $SLURM_JOB_NAME.slm.error
+fi
+
 
 # 运行完后清理nodelist
 rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
