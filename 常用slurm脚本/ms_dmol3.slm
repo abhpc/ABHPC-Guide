@@ -1,0 +1,50 @@
+#! /bin/bash
+# 这里指定作业名称，注意vasp的输入文件无需特意指定
+#SBATCH --job-name=test
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=E5-2678V3
+
+# 使用多少个节点
+#SBATCH --nodes=4
+
+# 每个节点使用多少核
+#SBATCH --ntasks-per-node=24
+
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 选择CASTEP版本
+module load ms/8.0
+source $LP_PATH/lp_profile
+
+# 指定计算的STEP，如DOS，BandStr等，空格隔开
+STEP=""
+
+# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
+
+# 以下生成MPI的nodelist
+CURDIR=`pwd`
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
+for i in $NODES
+do
+	echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
+done
+# 生成nodelist结束
+
+mpirun -genv I_MPI_FABRICS_LIST=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID  castepexe.exe  $SLURM_JOB_NAME
+rm -rf *.pid
+
+for i in $STEP
+do
+        cp ${SLURM_JOB_NAME}.check ${SLURM_JOB_NAME}_${i}.check
+        mpirun -genv I_MPI_FABRICS_LIST=ofi -machinefile $CURDIR/nodelist.$SLURM_JOB_ID castepexe.exe  ${SLURM_JOB_NAME}_${i}
+        rm -rf *.pid
+done
+
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+
+rm -rf *.check
+rm -rf *.orbitals
