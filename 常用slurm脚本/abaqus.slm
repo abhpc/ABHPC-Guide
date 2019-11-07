@@ -16,11 +16,11 @@
 #SBATCH --output=%j.out
 
 # 指定ABAQUS程序路径
-ABAQUS_EXE="/opt/simulia/Commands/abaqus"
+module load abaqus/6.14-2
 
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
 rm -rf $PWD/abaqus_v6.env
-cp /opt/simulia/6.14-2/SMA/site/abaqus_v6.env $PWD/abaqus_v6.env
+cp $ENVFILE $PWD/abaqus_v6.env
 node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)
 mp_host_list="["
 for host in ${node_list}; do
