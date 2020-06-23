@@ -16,7 +16,7 @@
 #SBATCH --output=%j.out
 
 # 使用module加载lammps
-module load lammps/12Dec18-impi
+module load lammps/12Dec18
 
 # 指定LAMMPS程序路径，在此选择使用CPU或者GPU运算
 # HW=cpu or HW=gpu
