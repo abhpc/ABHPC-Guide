@@ -16,7 +16,7 @@
 #SBATCH --output=%j.out
 
 # 使用module加载fluent和Intel MPI 2017
-module load fluent/19.5.0 intel/2017
+module load fluent/19.5.0
 
 # 指定fluent计算类型：2d, 3d, 2ddp, 3ddp
 TYPE="2d"
