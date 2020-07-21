@@ -1,0 +1,41 @@
+#!/bin/bash
+# 这里指定作业名称，默认journal file为$SLURM_JOB_NAME.jou，本例为test.jou
+#SBATCH --job-name=test
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=E5-2630V2
+
+# 使用多少个节点
+#SBATCH --nodes=2
+
+# 每个节点使用多少核 强烈注意：核数必须为该队列单个节点的核数
+#SBATCH --ntasks-per-node=12
+
+# 生成错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 使用module加载fluent和Intel MPI 2017
+module load fluent/19.5.0 intel/2017
+
+# 指定fluent计算类型：2d, 3d, 2ddp, 3ddp
+TYPE="2d"
+
+# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
+
+# 以下生成MPI的nodelist
+CURDIR=`pwd`
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
+for i in $NODES
+do
+echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
+done
+NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
+# 生成nodelist结束
+
+# 通过Intel MPI运行fluent
+fluent $TYPE -mpi=intel -g -i $SLURM_JOB_NAME.jou -cnf=nodelist.$SLURM_JOB_ID -t$NPROCS > $SLURM_JOB_NAME.sta
+
+# 运行完后清理nodelist
+rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
