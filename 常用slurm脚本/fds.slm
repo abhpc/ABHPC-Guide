@@ -15,6 +15,10 @@
 #SBATCH --error=%j.err
 #SBATCH --output=%j.out
 
+# 加载intel和FDS模块
+module load intel/2017
+module load fds/6.7.5
+
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
 
 # 以下生成MPI的nodelist
