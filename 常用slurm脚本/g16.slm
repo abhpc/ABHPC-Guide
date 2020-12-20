@@ -1,0 +1,40 @@
+#! /bin/bash
+# 这里指定作业名称，默认输入文件为[作业名].gjf，本例输入文件为H2O.gjf
+#SBATCH --job-name=H2O
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=E5-2678V3
+
+# 使用多少个节点
+#SBATCH --nodes=1
+
+# 每个节点使用多少核
+#SBATCH --ntasks-per-node=24
+
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 加载Gaussian 16程序
+module load gaussian/g16
+
+# 缓存设置，来源：https://www.nrel.gov/hpc/eagle-software-gaussian.html
+MEMSIZE=5GB
+SCRATCH=/tmp/$SLURM_JOB_ID
+SCRATCH2=/dev/shm
+
+# 修改gjf文件
+echo "%RWF=$SCRATCH2/,$MEMSIZE,$SCRATCH/,-1" > $SLURM_JOB_NAME.run.gjf
+echo "%NoSave" >> $SLURM_JOB_NAME.run.gjf
+echo " " >> $SLURM_JOB_NAME.run.gjf
+cat $SLURM_JOB_NAME.gjf >> $SLURM_JOB_NAME.run.gjf
+
+
+# 定义IO缓存目录
+export GAUSS_SCRDIR=$SCRATCH2
+mkdir -p $SCRATCH
+
+# 运行作业
+g16 $SLURM_JOB_NAME.run.gjf
+
+rm -rf $SCRATCH
