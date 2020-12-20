@@ -22,7 +22,7 @@
 
 新建集群用户: [CentOS 7](Admin/CentOS_7/新建集群用户.md)     [Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
 
-[高斯软件用户组修改](高斯用户组设置.md)
+[高斯软件用户组修改](Admin/高斯用户组设置.md)
 
 [Slurm管理教程](Admin/Slurm管理教程.md)
 
