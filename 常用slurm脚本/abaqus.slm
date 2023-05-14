@@ -42,5 +42,5 @@ rm -rf $SLURM_JOB_NAME.lck
 export MPI_IC_ORDER=TCP
 unset SLURM_GTIDS
 # 运行ABAQUS
-abaqus job=$SLURM_JOB_NAME cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=scratch.$SLURM_JOB_ID $ADD_ARGS int > $SLURM_JOB_NAME.log
+abaqus job=$SLURM_JOB_NAME input=$INPUT cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=scratch.$SLURM_JOB_ID $ADD_ARGS int > $SLURM_JOB_NAME.log
 rm -rf $PWD/abaqus_v6.env scratch.$SLURM_JOB_ID
