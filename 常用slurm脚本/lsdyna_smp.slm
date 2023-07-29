@@ -1,0 +1,28 @@
+#!/bin/bash
+# 这里指定作业名称
+#SBATCH --job-name=main
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=MX
+
+# 使用多少个节点,share memory mode只能使用一个节点
+#SBATCH --nodes=1
+
+# 每个节点使用多少核 强烈注意：核数必须小于该队列单个节点的核数
+#SBATCH --ntasks-per-node=48
+
+# 生成错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 使用module加载lsdyna
+source /etc/bashrc
+module load lsdyna/R10.1.0
+
+# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
+
+# 计算总核数
+NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
+
+# 通过MPI运行lsdyna
+lsdyna_dp.e i=$SLURM_JOB_NAME.k ncpu=$NPROCS> $SLURM_JOB_NAME.sta
