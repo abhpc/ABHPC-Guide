@@ -88,6 +88,13 @@ passwd: all authentication tokens updated successfully.
 ```
 先输入当前密码，然后重复输入新的密码，注意Linux下输入密码不会有任何显示（和Windows不同，Windows下输入密码一般显示为"********"）。
 
+用户修改完密码后，通知管理员在主节点上执行命令：
+```
+# make -C /var/yp
+```
+
+ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形工作站，则需要设置用户密码。
+
 
 ### 1.2 使用Nomachine连接图形界面
 
