@@ -192,9 +192,90 @@ $$T_{\rm tot} = T_{\rm cal} + T_{\rm com} $$
 ## 2.集群管理员
 
 ### 2.1 新建集群用户
-[CentOS 7](Admin/CentOS_7/新建集群用户.md)
 
-[Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
+以下案例在集群上创建一个名为"james"的用户, 注意最好一个人建一个用户，同课题组的用户可以创建一个账号，在ABHPC系统中规定账号只能英文和数字，且不能以数字开头。
+
+建议用户名使用人名缩写：张三——"zhangs"，李四——"lis"，以方便管理。
+
+**以下以"#"开头的命令行表示是root用户执行的命令，"$"开头表示的是普通用户执行的命令。**
+
+#### 2.1.1 新建Linux系统用户
+
+创建用户(这里不必指定密码)
+```
+# useradd james -d [home目录，例如:/home-fs/james]
+```
+若ssh只允许用私钥登录（安全起见），则无需给用户添加密码。添加密码的方法如下(非必要)：
+```
+# passwd james
+```
+回车后输入密码即可，注意Linux下输入密码不会有任何显示（Windows下输入密码可能显示为"********"）。
+
+#### 2.告知整个集群
+
+注意这里是大写字母"C":
+
+    # make -C /var/yp
+    make: Entering directory '/var/yp'
+    make[1]: Entering directory '/var/yp/abhpc-ai'
+    Updating shadow.byname...
+    Updating passwd.byname...
+    Updating passwd.byuid...
+    Updating group.byname...
+    Updating group.bygid...
+    Updating netid.byname...
+    make[1]: Leaving directory '/var/yp/abhpc-ai'
+    make: Leaving directory '/var/yp'
+
+#### 3.添加用户到集群许可用户
+
+把james加入到名为tensorflow的Account下(类似于小组的概念)。关于Account和User的关系，更详细的管理教程参考[这里](../Slurm管理教程.md)。
+
+    # sacctmgr list assoc format=Clusters,Account,User,qos,partition,GrpTRES
+    Cluster    Account       User                  QOS  Partition       GrpTRES
+    ---------- ---------- ---------- -------------------- ---------- -------------
+    abhpc-ai       root                          normal                          
+    abhpc-ai       root       root               normal                          
+    abhpc-ai tensorflow                          normal                          
+    abhpc-ai tensorflow      abhpc               normal                          
+    # sacctmgr add user james Account=tensorflow
+    Adding User(s)
+    james
+    Associations =
+    U = james     A = tensorflow C = abhpc-ai  
+    Non Default Settings
+    Would you like to commit changes? (You have 30 seconds to decide)
+    (N/y): y
+
+#### 4.用户初始化
+
+按照提示，一路回车即可，不用输入其他任何东西。
+
+    # su james
+    $ cd
+    $ init-dsa.sh
+    Generating public/private rsa key pair.
+    Enter file in which to save the key (/home/james/.ssh/id_rsa):
+    Created directory '/home/james/.ssh'.
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved in /home/james/.ssh/id_rsa.
+    Your public key has been saved in /home/james/.ssh/id_rsa.pub.
+    The key fingerprint is:
+    SHA256:SmnuUoInulf4ecwfNWn79wxdRoaL6wMb4Ki85Jfoddc james@abhpc-ai
+    The key's randomart image is:
+    +---[RSA 2048]----+
+    |                 |
+    |               . |
+    |              . o|
+    |       ..  . . + |
+    |   o  +oS.= . . o|
+    |  + ++o..oo+ . o.|
+    | . *.O+.o o+E . .|
+    |. .oBo*. o.o. .o |
+    |.o .+=...   oo .o|
+    +----[SHA256]-----+
+
 
 ### 2.2 Slurm系统管理
 
