@@ -51,7 +51,11 @@ ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.
 
 用户收到密钥后，可将密钥保存到安全的位置，一般命名为```username@host.id_dsa```，以防止多密钥时弄混。
 
-在ssh客户端导入DSA密钥，输入主节点的IP地址和ssh端口，即可登录集群。
+#### FinalShell设置ssh登录ABHPC系统
+
+<div  align="center">    
+<img src="images/FinalShell_newssh.jpg" width = "300" height = "300" alt="FinalShell新建ssh连接" align=center />
+</div>
 
 ### 1.2 使用Nomachine连接图形界面
 
@@ -193,7 +197,7 @@ $$T_{\rm tot} = T_{\rm cal} + T_{\rm com} $$
 所以，并不是核数用得越多，计算速度越快，当核数多到一定程度的时候，计算速度反而有所下降，甚至还会引起其他的问题，比如计算卡死。
 
 <div  align="center">    
-<img src="images/并行计算常见误区1.png" width = "300" height = "300" alt="图片名称" align=center />
+<img src="images/并行计算常见误区1.png" width = "300" height = "300" alt="并行计算常见误区1" align=center />
 </div>
 
 
