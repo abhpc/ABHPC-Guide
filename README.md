@@ -1,8 +1,8 @@
-# ABHPC集群使用和管理教程
+# abhpc 集群使用和管理教程
 
 遵循一般Linux系统的规则，**凡命令行开头为"#"的，表明此时正在使用root账户，而命令行开头为"$"的，则表明此时在使用普通用户**。建议没有Linux系统使用经验的用户，首先阅读[Linux常用命令](User/Linux常用命令.md)。
 
-本教程中，部分命令是ABHPC特有的脚本命令，在此不再详细说明。
+本教程中，部分命令是abhpc 特有的脚本命令，在此不再详细说明。
 
 本项目针对普通用户和管理员提供以下教程：
 
@@ -25,8 +25,8 @@
   + [2.1 新建集群用户](#21-%E6%96%B0%E5%BB%BA%E9%9B%86%E7%BE%A4%E7%94%A8%E6%88%B7)
     - [2.1.1 新建Linux系统用户](#211-%E6%96%B0%E5%BB%BAlinux%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7)
     - [2.1.2 将新建用户信息广播](#212-%E5%B0%86%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%B9%BF%E6%92%AD)
-    - [2.1.3 添加用户到集群许可用户](#213-%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E5%88%B0%E9%9B%86%E7%BE%A4%E8%AE%B8%E5%8F%AF%E7%94%A8%E6%88%B7)
-    - [4.用户初始化](#4%E7%94%A8%E6%88%B7%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [2.1.3 添加用户到集群许可账户](#213-%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E5%88%B0%E9%9B%86%E7%BE%A4%E8%AE%B8%E5%8F%AF%E8%B4%A6%E6%88%B7)
+    - [2.1.4 用户初始化](#214-%E7%94%A8%E6%88%B7%E5%88%9D%E5%A7%8B%E5%8C%96)
   + [2.2 Slurm系统管理](#22-slurm%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86)
   + [2.3 常用软件的安装和注意事项](#23-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
@@ -38,7 +38,7 @@
 
 ### 1.3 用户计算作业管理基本操作
 
-ABHPC使用Slurm系统进行计算作业管理。用户不必关注每个节点的情况，只需要告诉系统自己要运行什么程序、使用多少计算资源，Slurm系统即可自动对作业进行排队管理。以下是普通用户的常用操作介绍。
+abhpc 使用Slurm系统进行计算作业管理。用户不必关注每个节点的情况，只需要告诉系统自己要运行什么程序、使用多少计算资源，Slurm系统即可自动对作业进行排队管理。以下是普通用户的常用操作介绍。
 
 #### 1.3.1 提交作业
 
@@ -79,7 +79,7 @@ C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
 
 #### 1.3.5 查看队列(Partition)状态
 
-ABHPC默认在环境变量中设置```sinfo```命令的输出格式为：
+abhpc 默认在环境变量中设置```sinfo```命令的输出格式为：
 ```
 export SINFO_FORMAT="%10P %.6a %.6D  %.4c  %8t %16G %N"
 ```
@@ -96,7 +96,7 @@ MXQS           up      1    48  idle     (null)           A01
 
 #### 1.3.6 历史作业信息与统计
 
-ABHPC提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
+abhpc 提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
 ```
 $ slhist
  JobID    JobName         NodeList      User        Elapsed      State                                                      WorkDir
@@ -150,7 +150,7 @@ Usage reported in CPU Minutes
 --------------------------------------------------------------------------------
   Cluster         Account     Login     Proper Name     Used   Energy
 --------- --------------- --------- --------------- -------- --------
-    abhpc            root       liq                    15705        0
+    abhpc             root       liq                    15705        0
 ```
 注意这里的机时是按分钟数计算的，实际算机时还要除以60。
 
@@ -197,7 +197,7 @@ $$T_{\rm tot} = T_{\rm cal} + T_{\rm com} $$
 
 ### 2.1 新建集群用户
 
-以下案例在集群上创建一个名为"james"的用户, 注意最好一个人建一个用户，同课题组的用户可以创建一个账号，在ABHPC系统中规定账号只能英文和数字，且不能以数字开头。
+以下案例在集群上创建一个名为"james"的用户, 注意最好一个人建一个用户，同课题组的用户可以创建一个账号，在abhpc 系统中规定账号只能英文和数字，且不能以数字开头。
 
 建议用户名使用人名缩写：张三——"zhangs"，李四——"lis"，以方便管理。
 
@@ -221,66 +221,86 @@ $$T_{\rm tot} = T_{\rm cal} + T_{\rm com} $$
 ```
 # make -C /var/yp
 make: Entering directory '/var/yp'
-make[1]: Entering directory '/var/yp/abhpc-ai'
+make[1]: Entering directory '/var/yp/abhpc -ai'
 Updating shadow.byname...
 Updating passwd.byname...
 Updating passwd.byuid...
 Updating group.byname...
 Updating group.bygid...
 Updating netid.byname...
-make[1]: Leaving directory '/var/yp/abhpc-ai'
+make[1]: Leaving directory '/var/yp/abhpc -ai'
 make: Leaving directory '/var/yp'
 ```
 
-#### 2.1.3 添加用户到集群许可用户
+#### 2.1.3 添加用户到集群许可账户
 
-把james加入到名为tensorflow的Account下(类似于小组的概念)。关于Account和User的关系，更详细的管理教程参考[这里](../Slurm管理教程.md)。
+一般同一个课题组的用户都设置一个组（在Slurm中叫做Account），查看Account和用户的命令为：
+```
+# slassoc
+   Cluster    Account       User                  QOS  Partition                        GrpTRES
+---------- ---------- ---------- -------------------- ---------- ------------------------------
+    abhpc        root                          normal                                           
+    abhpc        root       root               normal                                           
+    abhpc         crx                          normal                                           
+    abhpc         crx     xinghb               normal                                           
+    abhpc         crx    zhangyl               normal                                           
+    abhpc       shock                          normal                                           
+    abhpc       shock       haiy               normal                                           
+    abhpc       shock        dli               normal                                           
+    abhpc       shock      guajy               normal                                           
+    abhpc       shock       tusc               normal                                           
+    abhpc       shock       xijx               normal                                           
+    abhpc         tcm                          normal                                           
+    abhpc         tcm      huaxy               normal                                           
+    abhpc         tcm     huangs               normal                                           
+    abhpc         xrd                          normal                                           
+    abhpc         xrd       ches               normal                                           
+    abhpc         xrd     hengyt               normal                                           
+```
+该命令可以显示集群中的全部组、用户和权限。关于Account和User的关系，更详细的管理教程参考[这里](Admin/Slurm管理教程.md)。
 
-    # sacctmgr list assoc format=Clusters,Account,User,qos,partition,GrpTRES
-    Cluster    Account       User                  QOS  Partition       GrpTRES
-    ---------- ---------- ---------- -------------------- ---------- -------------
-    abhpc-ai       root                          normal                          
-    abhpc-ai       root       root               normal                          
-    abhpc-ai tensorflow                          normal                          
-    abhpc-ai tensorflow      abhpc               normal                          
-    # sacctmgr add user james Account=tensorflow
-    Adding User(s)
-    james
-    Associations =
-    U = james     A = tensorflow C = abhpc-ai  
-    Non Default Settings
-    Would you like to commit changes? (You have 30 seconds to decide)
-    (N/y): y
+把james加入到名为tensorflow的Account下。
+```
+# sacctmgr add user james Account=tensorflow
+Adding User(s)
+james
+Associations =
+U = james     A = tensorflow C = abhpc -ai  
+Non Default Settings
+Would you like to commit changes? (You have 30 seconds to decide)
+(N/y): y
+```
 
-#### 4.用户初始化
+#### 2.1.4 用户初始化
 
-按照提示，一路回车即可，不用输入其他任何东西。
-
-    # su james
-    $ cd
-    $ init-dsa.sh
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/james/.ssh/id_rsa):
-    Created directory '/home/james/.ssh'.
-    Enter passphrase (empty for no passphrase):
-    Enter same passphrase again:
-    Your identification has been saved in /home/james/.ssh/id_rsa.
-    Your public key has been saved in /home/james/.ssh/id_rsa.pub.
-    The key fingerprint is:
-    SHA256:SmnuUoInulf4ecwfNWn79wxdRoaL6wMb4Ki85Jfoddc james@abhpc-ai
-    The key's randomart image is:
-    +---[RSA 2048]----+
-    |                 |
-    |               . |
-    |              . o|
-    |       ..  . . + |
-    |   o  +oS.= . . o|
-    |  + ++o..oo+ . o.|
-    | . *.O+.o o+E . .|
-    |. .oBo*. o.o. .o |
-    |.o .+=...   oo .o|
-    +----[SHA256]-----+
-
+ABHPC系统通过命令```init-dsa.sh```对用户进行初始化。还是以james用户为例，首先切换到james用户，然后执行命令，一路回车即可：
+```
+# su james
+$ cd
+$ init-dsa.sh
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/james/.ssh/id_rsa):
+Created directory '/home/james/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/james/.ssh/id_rsa.
+Your public key has been saved in /home/james/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:SmnuUoInulf4ecwfNWn79wxdRoaL6wMb4Ki85Jfoddc james@abhpc -ai
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|               . |
+|              . o|
+|       ..  . . + |
+|   o  +oS.= . . o|
+|  + ++o..oo+ . o.|
+| . *.O+.o o+E . .|
+|. .oBo*. o.o. .o |
+|.o .+=...   oo .o|
++----[SHA256]-----+
+```
+执行结束后，在james用户的$HOME/.ssh/目录下有一个id_dsa文件，需要下载下来作为ssh登录的DSA密钥。
 
 ### 2.2 Slurm系统管理
 
