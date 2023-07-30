@@ -15,8 +15,8 @@
 #SBATCH --error=%j.err
 #SBATCH --output=%j.out
 
-# 加载vasp
-# example: module load vasp/6.1.2
+# 加载vasp模块
+source /etc/bashrc
 module load vasp/5.3.5
 
 # Define the vasp program
@@ -37,7 +37,7 @@ done
 # 生成nodelist结束
 
 # 通过MPI运行VASP
-mpirun -genv I_MPI_FABRICS=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID $VASP_EXE > $SLURM_JOB_NAME.sta
+mpirun -env FI_PROVIDER=tcp -machinefile $CURDIR/nodelist.$SLURM_JOB_ID $VASP_EXE > $SLURM_JOB_NAME.sta
 
 # 运行完后清理nodelist
 rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
