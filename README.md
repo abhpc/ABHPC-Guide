@@ -105,7 +105,7 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 安装好以后，Add连接：
 
 <div  align="center">    
-<img src="images/NX_newsession.png" width = "787" height = "450" alt="新建NX连接" align=center />
+<img src="images/NX_newsession.png" width = "716" height = "450" alt="新建NX连接" align=center />
 </div>
 
 ### 1.3 用户计算作业管理基本操作
