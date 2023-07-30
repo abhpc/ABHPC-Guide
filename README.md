@@ -6,7 +6,7 @@
 
 本项目针对普通用户和管理员提供以下教程：
 
-### 1.普通用户
+## 1.普通用户
 
 [ssh远程连接集群](User/ssh远程连接集群.md)
 
@@ -18,13 +18,22 @@
 
 [并行计算常用知识](并行计算常用知识)
 
-### 2.集群管理员
+## 2.集群管理员
 
-新建集群用户: [CentOS 7](Admin/CentOS_7/新建集群用户.md),     [Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
+### 2.1 新建集群用户
+[CentOS 7](Admin/CentOS_7/新建集群用户.md)
 
-[高斯软件用户组修改](Admin/高斯用户组设置.md)
+[Ubuntu 16.04LTS](Admin/Ubuntu_16.04/新建集群用户.md)
+
+### 2.2 Slurm系统管理
 
 [Slurm管理教程](Admin/Slurm管理教程.md)
+
+### 2.3 常用软件的安装和注意事项
+
+（1）[Gaussian 2016](Admin/高斯用户组设置.md)
+
+
 
 [配置服务器的远程MATE桌面](Admin/配置服务器的远程MATE桌面.md)
 
