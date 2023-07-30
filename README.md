@@ -75,7 +75,7 @@ C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
 
 #### 1.3.5 查看队列(Partition)状态
 
-ABHPC在环境变量中设置```sinfo```命令的输出格式为：
+ABHPC默认在环境变量中设置```sinfo```命令的输出格式为：
 ```
 export SINFO_FORMAT="%10P %.6a %.6D  %.4c  %8t %16G %N"
 ```
@@ -87,7 +87,7 @@ MX*            up      8    48  down*    (null)           A[13-20]
 MX*            up     11    48  idle     (null)           A[02-12]
 MXQS           up      1    48  idle     (null)           A01
 ```
-这样可以显示多少节点可用，每个节点多少核数。
+这样可以显示多少节点可用，每个节点多少核数。用户直接使用```sinfo```命令可满足大部分场景，如果有特殊需求的，请在$HOME/.bashrc文件中自定义环境变量SINFO_FORMAT。
 
 
 #### 1.3.6 历史作业信息与统计
