@@ -47,7 +47,11 @@ Windows系统：[Xshell5](Files/Xshell5.tar.gz)和[Xftp5](Files/Xftp5.tar.gz)，
 
 MacOS系统：[FinalShell](https://www.hostbuf.com) (**付费软件，但是很便宜**)
 
+ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.1 新建集群用户](#21-%E6%96%B0%E5%BB%BA%E9%9B%86%E7%BE%A4%E7%94%A8%E6%88%B7)）。
 
+用户收到密钥后，可将密钥保存到安全的位置，一般命名为“username@host.id_dsa”，以防止多密钥时弄混。
+
+在ssh客户端导入DSA密钥，输入主节点的IP地址和ssh端口，即可登录集群。
 
 ### 1.2 使用Nomachine连接图形界面
 
