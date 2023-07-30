@@ -28,7 +28,162 @@
 
 ### 1.3 用户计算作业管理基本操作
 
-ABHPC使用Slurm系统进行计算作业管理。用户不必关注每个节点的情况，只需要告诉系统自己要运行什么程序、使用多少计算资源，Slurm系统即可自动对作业进行排队管理。
+ABHPC使用Slurm系统进行计算作业管理。用户不必关注每个节点的情况，只需要告诉系统自己要运行什么程序、使用多少计算资源，Slurm系统即可自动对作业进行排队管理。以下是普通用户的常用操作介绍。
+
+#### 1.3.1 提交作业
+
+```
+$ sbatch [作业脚本].slm
+```
+常用的slurm脚本可以在[这里下载](常用slurm脚本)。
+
+#### 1.3.2 查看作业
+```
+$ squeue
+```
+通过此命令可以获得作业的信息如ID和运行状态等。
+
+#### 1.3.3 中断作业
+```
+$ scancel [作业ID]
+```
+中断本用户的全部作业
+```
+$ scancel -u $USER
+```
+
+#### 1.3.4 查看节点情况
+
+以测试集群为例，使用```slhosts```命令可以查看集群全部计算节点的状态。
+
+```
+$ slhosts
+HOSTNAME STATE      CPUS    CPUS(A/I/O/T) FREE_MEM   REASON GRES
+C01      idle       20          0/20/0/20    52609     none gpu:rtx2080:2
+C02      idle       20          0/20/0/20    53734     none gpu:rtx2080:2
+C03      idle       20          0/20/0/20    53692     none gpu:rtx2080:2
+C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
+```
+其中，CPUS(A/I/O/T)分别代表CPU的Allocated/Idle/Other/Total个数。这样可以判断哪些节点是可用
+的，最大能提交多少核、多少节点。
+
+#### 1.3.5 查看队列(Partition)状态
+
+一般地，我们在环境变量中设置```sinfo```命令的输出格式为：
+```
+export SINFO_FORMAT="%10P %.6a %.6D  %.4c  %8t %16G %N"
+```
+其输出格式为：
+```
+# sinfo
+PARTITION   AVAIL  NODES  CPUS  STATE    GRES             NODELIST
+MX*            up      8    48  down*    (null)           A[13-20]
+MX*            up     11    48  idle     (null)           A[02-12]
+MXQS           up      1    48  idle     (null)           A01
+```
+这样可以显示多少节点可用，每个节点多少核数。
+
+
+#### 1.3.6 历史作业信息与统计
+
+ABHPC提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
+```
+$ slhist
+ JobID    JobName         NodeList      User        Elapsed      State                                                      WorkDir
+------ ---------- ---------------- --------- -------------- ----------        -----------------------------------------------------
+     6       test    None assigned       liq       00:00:00 CANCELLED+                                               /home/liq/text
+     7       test    None assigned       liq       00:00:00 CANCELLED+                                               /home/liq/text
+     9       test              A01       liq       01:13:03 CANCELLED+                                               /home/liq/text
+    10       test              A02       liq       00:43:00 CANCELLED+                                           /home/liq/text2/64
+    11       test         A[01,03]       liq       00:42:30 CANCELLED+                                         /home/liq/text2/3232
+    12       test              A01       liq       00:08:36 COMPLETED                                            /home/liq/text/scf
+    13       test              A02       liq       00:05:34 COMPLETED                                        /home/liq/text2/64/scf
+    14       test         A[01,03]       liq       00:10:47 COMPLETED                                      /home/liq/text2/3232/scf
+    15       test              A01       liq       00:02:45 CANCELLED+                                               /home/liq/text
+    16       test              A02       liq       00:26:16 RUNNING                                              /home/liq/text2/64
+    17       test         A[01,03]       liq       00:24:27 RUNNING                                            /home/liq/text2/3232
+```
+第一列JobID是作业ID，第二列JobName是作业名，第三列Nodelist是运行的计算节点列表，第四列User是用户名，第五列Elapsed是运行时间，第六列State是作业状态，最后一列WorkDir是作业运行的目录。
+
+也可以通过```-S  [开始时间]```和```-E   [结束时间]```参数来查看指定时间范围内的作业情况。
+
+Slurm的时间格式为：[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]，如2019年1月1日0时0分0秒的格式写作：
+```
+2019-01-01T00:00:00
+```
+
+
+查看用户自2019年1月1日至今的作业情况：
+
+    $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X
+           JobID  Partition    Account      User  AllocCPUS CPUTimeRAW      State                                                      WorkDir
+    ------------ ---------- ---------- --------- ---------- ---------- ----------        -----------------------------------------------------
+    52            E5-2640V4 tensorflow      lily         80         80  COMPLETED                                          /home/lily/fds-test
+    53            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    54            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    55            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    56            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    57            E5-2640V4 tensorflow      lily          4          0  COMPLETED                                          /home/lily/fds-test
+    58            E5-2640V4 tensorflow      lily        160          0 CANCELLED+                                          /home/lily/fds-test
+    59            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    60            E5-2640V4 tensorflow      lily         80          0  COMPLETED                                          /home/lily/fds-test
+    61            E5-2640V4 tensorflow      lily         80          0     FAILED                                          /home/lily/fds-test
+    62            E5-2640V4 tensorflow      lily         80       2640 CANCELLED+                                          /home/lily/fds-test
+    63            E5-2640V4 tensorflow      lily         80       5360 CANCELLED+                                          /home/lily/fds-test
+    64            E5-2640V4 tensorflow      lily         80       7680  CANCELLED                                          /home/lily/fds-test
+    65            E5-2640V4 tensorflow      lily         80      18480  CANCELLED                                          /home/lily/fds-test
+    66            E5-2640V4 tensorflow      lily         80       3040  CANCELLED                                          /home/lily/fds-test
+    67            E5-2640V4 tensorflow      lily         80       7920 CANCELLED+                                          /home/lily/fds-test
+    68            E5-2640V4 tensorflow      lily         80      10960 CANCELLED+                                          /home/lily/fds-test
+    69            E5-2640V4 tensorflow      lily         80       5040 CANCELLED+                                          /home/lily/fds-test
+    70            E5-2640V4 tensorflow      lily         80        800  COMPLETED                                          /home/lily/fds-test
+    71            E5-2640V4 tensorflow      lily         80        880  COMPLETED                                          /home/lily/fds-test
+    72            E5-2640V4 tensorflow      lily         80        800  COMPLETED                                          /home/lily/fds-test
+    73            E5-2640V4 tensorflow      lily         80      19760 CANCELLED+                                          /home/lily/fds-test
+    74            E5-2640V4 tensorflow      lily         80          0 CANCELLED+                                         /home/lily/fds-test2
+
+以上各列分别对应作业ID，队列，账户，用户，CPU开销，机时(单位秒)，状态，工作路径。
+
+如果要统计自己使用的机时，则可以使用如下命令(也即使用awk将第6列的cputimeraw加起来)：
+
+    $ sacct -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
+
+注意这里的输出单位是秒，换算成机时还需要除以3600。
+
+除了直接使用sacct命令，还可以使用slhist命令。例如用户lily执行以下命令的输出为：
+
+    $ slhist -S 2019-01-01T00:00:00
+           JobID  Partition    Account      User  AllocCPUS  AllocGRES           CPUTimeRAW                State                                            WorkDir
+    ------------ ---------- ---------- --------- ---------- ----------- -------------------- -------------------- --------------------------------------------------
+    52            E5-2640V4 tensorflow      lily         80                               80 COMPLETED            /home/lily/fds-test                                
+    53            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    54            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    55            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    56            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    57            E5-2640V4 tensorflow      lily          4                                0 COMPLETED            /home/lily/fds-test                                
+    58            E5-2640V4 tensorflow      lily        160                                0 CANCELLED by 1002    /home/lily/fds-test                                
+    59            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    60            E5-2640V4 tensorflow      lily         80                                0 COMPLETED            /home/lily/fds-test                                
+    61            E5-2640V4 tensorflow      lily         80                                0 FAILED               /home/lily/fds-test                                
+    62            E5-2640V4 tensorflow      lily         80                             2640 CANCELLED by 1002    /home/lily/fds-test                                
+    63            E5-2640V4 tensorflow      lily         80                             5360 CANCELLED by 1002    /home/lily/fds-test                                
+    64            E5-2640V4 tensorflow      lily         80                             7680 CANCELLED            /home/lily/fds-test                                
+    65            E5-2640V4 tensorflow      lily         80                            18480 CANCELLED            /home/lily/fds-test                                
+    66            E5-2640V4 tensorflow      lily         80                             3040 CANCELLED            /home/lily/fds-test                                
+    67            E5-2640V4 tensorflow      lily         80                             7920 CANCELLED by 1002    /home/lily/fds-test                                
+    68            E5-2640V4 tensorflow      lily         80                            10960 CANCELLED by 1002    /home/lily/fds-test                                
+    69            E5-2640V4 tensorflow      lily         80                             5040 CANCELLED by 1002    /home/lily/fds-test                                
+    70            E5-2640V4 tensorflow      lily         80                              800 COMPLETED            /home/lily/fds-test                                
+    71            E5-2640V4 tensorflow      lily         80                              880 COMPLETED            /home/lily/fds-test                                
+    72            E5-2640V4 tensorflow      lily         80                              800 COMPLETED            /home/lily/fds-test                                
+    73            E5-2640V4 tensorflow      lily         80                            19760 CANCELLED by 1002    /home/lily/fds-test                                
+    74            E5-2640V4 tensorflow      lily         80                                0 CANCELLED by 1002    /home/lily/fds-test2
+
+同样，对第7列求和可以得到该段时间内的总机时：
+
+    $ slhist -S 2019-01-01T00:00:00 |awk 'BEGIN{total=0}{total+=$7}END{print total}'
+
+
 
 ### 1.4 进阶：并行计算基础知识
 
