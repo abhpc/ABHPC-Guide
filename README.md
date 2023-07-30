@@ -86,7 +86,7 @@ C04      idle       20          0/20/0/20    53740     none gpu:rtx2080:2
 
 #### 1.3.5 查看队列(Partition)状态
 
-abhpc 默认在环境变量中设置```sinfo```命令的输出格式为：
+ABHPC默认在环境变量中设置```sinfo```命令的输出格式为：
 ```
 export SINFO_FORMAT="%10P %.6a %.6D  %.4c  %8t %16G %N"
 ```
@@ -103,7 +103,7 @@ MXQS           up      1    48  idle     (null)           A01
 
 #### 1.3.6 历史作业信息与统计
 
-abhpc 提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
+ABHPC提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
 ```
 $ slhist
  JobID    JobName         NodeList      User        Elapsed      State                                                      WorkDir
