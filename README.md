@@ -52,15 +52,18 @@ $$T_{\rm tot} = T_{\rm cal} + T_{\rm com} $$
 
 ### 1.5 常见错误
 
+#### 1.5.1 error: Unable to allocate resources: Invalid account or account/partition combination specified
+
+管理员创建用户时，未将该用户添加到任何Account中，使得该用户无法使用计算资源。请联系管理员，让管理员参考[2.2 Slurm系统管理](#22-slurm%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86)进行设置。
+
+
 [ssh远程连接集群](User/ssh远程连接集群.md)
 
 [远程桌面连接集群](User/使用x2go连接Ubuntu远程桌面.md)
 
 [Slurm用户教程](User/Slurm用户教程.md)
 
-[常见错误](User/常见错误.md)
 
-[并行计算常用知识](并行计算常用知识)
 
 ## 2.集群管理员
 
