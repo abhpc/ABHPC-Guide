@@ -28,6 +28,12 @@
     - [2.1.3 添加用户到集群许可账户](#213-%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E5%88%B0%E9%9B%86%E7%BE%A4%E8%AE%B8%E5%8F%AF%E8%B4%A6%E6%88%B7)
     - [2.1.4 用户初始化](#214-%E7%94%A8%E6%88%B7%E5%88%9D%E5%A7%8B%E5%8C%96)
   + [2.2 Slurm系统管理](#22-slurm%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86)
+    - [2.2.1 查看关联关系](#221-%E6%9F%A5%E7%9C%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB)
+    - [2.2.2 管理Account和User](#222-%E7%AE%A1%E7%90%86account%E5%92%8Cuser)
+    - [2.2.3 Account和User的权限管理](#223-account%E5%92%8Cuser%E7%9A%84%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86)
+    - [2.2.4 管理员计费系统](#224-%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%A1%E8%B4%B9%E7%B3%BB%E7%BB%9F)
+      * [4.1 对用户lily自2019年1月1日0时起使用的机时进行统计：](#41-%E5%AF%B9%E7%94%A8%E6%88%B7lily%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
+      * [4.2 对名为tensorflow的account自2019年1月1日0时起使用的机时进行统计：](#42-%E5%AF%B9%E5%90%8D%E4%B8%BAtensorflow%E7%9A%84account%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
   + [2.3 常用软件的安装和注意事项](#23-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
 ## 1.普通用户
@@ -380,77 +386,77 @@ modify user        - (set options) AdminLevel=, DefaultAccount=,
                      Partitions=, and QosLevel=
 ......
 ```
-
-
-##### 2.1 新建一个account的命令如下：
-
-    # sacctmgr add account [账号名称]
-
-##### 2.2 添加用户到指定的Account（例如tensorflow）：
-
-    # sacctmgr add user account=tensorflow
-
-##### 2.3 修改用户属性
-
-    # sacctmgr modify user [用户名] set [属性]=[设定值]
-
+**新建一个account的命令如下：**
+```
+# sacctmgr add account [账号名称]
+```
+**添加用户到指定的Account（例如tensorflow）：**
+```
+# sacctmgr add user account=tensorflow
+```
+**修改用户属性**
+```
+# sacctmgr modify user [用户名] set [属性]=[设定值]
+```
 用户的属性值可以查阅[帮助文档](https://slurm.schedmd.com/sacctmgr.html)。
 
-### 3. Account和User的权限管理
+#### 2.2.3 Account和User的权限管理
 
 Account和User的权限使用GrpTRES来进行限制：
-
+```
 GrpTRES=<TRES=max TRES,...>  
 Maximum number of TRES running jobs are able to be allocated in aggregate for this association and all associations which are children of this association. To clear a previously set value use the modify command with a new value of -1 for each TRES id.  
 NOTE: This limit only applies fully when using the Select Consumable Resource plugin.
-
+```
 例如，限制lily用户的CPU核数为40，节点数为2，GPU最大使用为4：
-
-    # sacctmgr modify user lily set Grptres="cpu=40,node=2,gres/gpu=4"
-    # slassoc
-       Cluster    Account       User                  QOS  Partition                        GrpTRES
-    ---------- ---------- ---------- -------------------- ---------- ------------------------------
-      abhpc-ai       root                          normal
-      abhpc-ai       root       root               normal
-      abhpc-ai tensorflow                          normal
-      abhpc-ai tensorflow      abhpc               normal
-      abhpc-ai tensorflow       lily               normal                  cpu=40,gres/gpu=4,node=2
+```
+# sacctmgr modify user lily set Grptres="cpu=40,node=2,gres/gpu=4"
+# slassoc
+   Cluster    Account       User                  QOS  Partition                        GrpTRES
+---------- ---------- ---------- -------------------- ---------- ------------------------------
+  abhpc-ai       root                          normal
+  abhpc-ai       root       root               normal
+  abhpc-ai tensorflow                          normal
+  abhpc-ai tensorflow      abhpc               normal
+  abhpc-ai tensorflow       lily               normal                  cpu=40,gres/gpu=4,node=2
+```
 
 重置该用户全部限制则为：
-
-    # sacctmgr modify user lily set Grptres="cpu=-1,node=-1,gres/gpu=-1"
-       Cluster    Account       User                  QOS  Partition                        GrpTRES
-    ---------- ---------- ---------- -------------------- ---------- ------------------------------
-      abhpc-ai       root                          normal
-      abhpc-ai       root       root               normal
-      abhpc-ai tensorflow                          normal
-      abhpc-ai tensorflow      abhpc               normal
-      abhpc-ai tensorflow       lily               normal                  
-
+```
+# sacctmgr modify user lily set Grptres="cpu=-1,node=-1,gres/gpu=-1"
+   Cluster    Account       User                  QOS  Partition                        GrpTRES
+---------- ---------- ---------- -------------------- ---------- ------------------------------
+  abhpc-ai       root                          normal
+  abhpc-ai       root       root               normal
+  abhpc-ai tensorflow                          normal
+  abhpc-ai tensorflow      abhpc               normal
+  abhpc-ai tensorflow       lily               normal                  
+```
 同样，可以对整个Account进行限制，其含义是Account包含的全部用户累计总和不得超过最大限制。例如：
-
-    # sacctmgr modify account tensorflow set Grptres="cpu=40,node=2,gres/gpu=4"
-    # slassoc
-       Cluster    Account       User                  QOS  Partition                        GrpTRES
-    ---------- ---------- ---------- -------------------- ---------- ------------------------------
-      abhpc-ai       root                          normal                                           
-      abhpc-ai       root       root               normal                                           
-      abhpc-ai tensorflow                          normal                  cpu=40,gres/gpu=4,node=2
-      abhpc-ai tensorflow      abhpc               normal                                           
-      abhpc-ai tensorflow       lily               normal
-
+```
+# sacctmgr modify account tensorflow set Grptres="cpu=40,node=2,gres/gpu=4"
+# slassoc
+   Cluster    Account       User                  QOS  Partition                        GrpTRES
+---------- ---------- ---------- -------------------- ---------- ------------------------------
+  abhpc-ai       root                          normal                                           
+  abhpc-ai       root       root               normal                                           
+  abhpc-ai tensorflow                          normal                  cpu=40,gres/gpu=4,node=2
+  abhpc-ai tensorflow      abhpc               normal                                           
+  abhpc-ai tensorflow       lily               normal
+```
 重置该Account的全部限制为：
+```
+# sacctmgr modify account tensorflow set Grptres="cpu=-1,node=-1,gres/gpu=-1"
+   Cluster    Account       User                  QOS  Partition                        GrpTRES
+---------- ---------- ---------- -------------------- ---------- ------------------------------
+  abhpc-ai       root                          normal
+  abhpc-ai       root       root               normal
+  abhpc-ai tensorflow                          normal
+  abhpc-ai tensorflow      abhpc               normal
+  abhpc-ai tensorflow       lily               normal
+```
 
-    # sacctmgr modify account tensorflow set Grptres="cpu=-1,node=-1,gres/gpu=-1"
-       Cluster    Account       User                  QOS  Partition                        GrpTRES
-    ---------- ---------- ---------- -------------------- ---------- ------------------------------
-      abhpc-ai       root                          normal
-      abhpc-ai       root       root               normal
-      abhpc-ai tensorflow                          normal
-      abhpc-ai tensorflow      abhpc               normal
-      abhpc-ai tensorflow       lily               normal
-
-### 4. 管理员计费系统
+#### 2.2.4 管理员计费系统
 
 如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时，在[用户教程](../User/Slurm用户教程.md)中已经提供了用户机时的统计方法，但同一Account下的其他用户的作业是互相不可见的，因此，作为管理员可以对单个用户计费，也可以对整个Account进行机时计费，以下举例说明。
 
