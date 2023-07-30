@@ -111,7 +111,7 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 然后连接创建的Session，根据提示输入用户名和密码，即可远程
 
 <div  align="center">    
-<img src="images/NX_screenshot.png" width = "1057" height = "600" alt="NX桌面截图" align=center />
+<img src="images/NX_screenshot.png" width = "800" height = "453" alt="NX桌面截图" align=center />
 </div>
 
 ### 1.3 用户计算作业管理基本操作
