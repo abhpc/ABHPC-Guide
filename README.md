@@ -53,9 +53,18 @@ ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.
 
 #### FinalShell设置ssh登录ABHPC系统
 
+首先，新建一个ssh连接，按照下图所示顺序设置好连接名、主机IP（或域名）、ssh端口号。认证方式为“公钥”，并输入用户名。最后选择浏览，选择私钥文件。
+
 <div  align="center">    
 <img src="images/Finalshell_newssh.jpg" width = "462" height = "400" alt="FinalShell新建ssh连接" align=center />
 </div>
+
+导入私钥文件：
+
+<div  align="center">    
+<img src="images/Finalshell_importkey.jpg" width = "392" height = "400" alt="FinalShell导入ssh私钥" align=center />
+</div>
+
 
 ### 1.2 使用Nomachine连接图形界面
 
