@@ -24,6 +24,4 @@
       - [2.2.2 管理Account和User](#222-%E7%AE%A1%E7%90%86account%E5%92%8Cuser)
       - [2.2.3 Account和User的权限管理](#223-account%E5%92%8Cuser%E7%9A%84%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86)
       - [2.2.4 管理员计费系统](#224-%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%A1%E8%B4%B9%E7%B3%BB%E7%BB%9F)
-        * [4.1 对用户lily自2019年1月1日0时起使用的机时进行统计：](#41-%E5%AF%B9%E7%94%A8%E6%88%B7lily%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
-        * [4.2 对名为tensorflow的account自2019年1月1日0时起使用的机时进行统计：](#42-%E5%AF%B9%E5%90%8D%E4%B8%BAtensorflow%E7%9A%84account%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
     + [2.3 常用软件的安装和注意事项](#23-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)

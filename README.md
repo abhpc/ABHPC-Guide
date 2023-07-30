@@ -32,8 +32,6 @@
     - [2.2.2 管理Account和User](#222-%E7%AE%A1%E7%90%86account%E5%92%8Cuser)
     - [2.2.3 Account和User的权限管理](#223-account%E5%92%8Cuser%E7%9A%84%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86)
     - [2.2.4 管理员计费系统](#224-%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%A1%E8%B4%B9%E7%B3%BB%E7%BB%9F)
-      * [4.1 对用户lily自2019年1月1日0时起使用的机时进行统计：](#41-%E5%AF%B9%E7%94%A8%E6%88%B7lily%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
-      * [4.2 对名为tensorflow的account自2019年1月1日0时起使用的机时进行统计：](#42-%E5%AF%B9%E5%90%8D%E4%B8%BAtensorflow%E7%9A%84account%E8%87%AA2019%E5%B9%B41%E6%9C%881%E6%97%A50%E6%97%B6%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%BA%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%9F%E8%AE%A1)
   + [2.3 常用软件的安装和注意事项](#23-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 
 ## 1.普通用户
@@ -458,23 +456,29 @@ NOTE: This limit only applies fully when using the Select Consumable Resource pl
 
 #### 2.2.4 管理员计费系统
 
-如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时，在[用户教程](../User/Slurm用户教程.md)中已经提供了用户机时的统计方法，但同一Account下的其他用户的作业是互相不可见的，因此，作为管理员可以对单个用户计费，也可以对整个Account进行机时计费，以下举例说明。
+如果集群涉及到计费问题，则需要统计用户(User)或账户(Account)在某段时间内的使用机时，在[1.3.6 历史作业信息与统计](#136-%E5%8E%86%E5%8F%B2%E4%BD%9C%E4%B8%9A%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%BB%9F%E8%AE%A1)中已经提供了用户机时的统计方法，但同一Account下的其他用户的作业是互相不可见的，因此，作为管理员可以对单个用户计费，也可以对整个Account进行机时计费，以下举例说明。
 
-##### 4.1 对用户lily自2019年1月1日0时起使用的机时进行统计：
-
-    # sacct -u lily -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
-
-##### 4.2 对名为tensorflow的account自2019年1月1日0时起使用的机时进行统计：
-
-    # sacct -A tensorflow -S 2019-01-01T00:00:00 -o "jobid,partition,account,user,alloccpus,cputimeraw,state,workdir%60" -X |awk 'BEGIN{total=0}{total+=$6}END{print total}'
-
-注意这里的机时单位都是秒，换算成核时需要除以3600。
-
-也可以通过sreport命令来进行机时统计，这里默认的单位是分钟。例如，统计ame用户从2019年1月1日起的全部机时：
+**对用户lily自2019年1月1日0时起使用的机时进行统计：**
 ```
-sreport cluster AccountUtilizationByUser start=2019-01-01 user=ame
+# sreport cluster AccountUtilizationByUser start=2019-01-01 user=lily
 ```
+注意这种统计一般当日的机时是不计算在内的，如有需求，通过参数```end=[截止日期]```手动执行时间范围。
 
+**管理员也可对整个组（Account）进行机时统计：**
+```
+# sreport cluster AccountUtilizationByAccount start=2019-01-01 account=cmt
+--------------------------------------------------------------------------------
+Cluster/Account/User Utilization 2019-01-01T00:00:00 - 2023-07-29T23:59:59 (144374400 secs)
+Usage reported in CPU Minutes
+--------------------------------------------------------------------------------
+  Cluster         Account     Login     Proper Name       Used   Energy
+--------- --------------- --------- --------------- ---------- --------
+    abhpc             cmt                            108891822        0
+    abhpc             cmt       yib                     246829        0
+    abhpc             cmt     guxiy                    4396837        0
+    abhpc             cmt      guyf                   13610509        0
+    abhpc             cmt    huangs                   90637647        0
+```
 
 
 ### 2.3 常用软件的安装和注意事项
