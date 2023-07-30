@@ -108,6 +108,12 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 <img src="images/NX_newsession.png" width = "716" height = "450" alt="新建NX连接" align=center />
 </div>
 
+然后连接创建的Session，根据提示输入用户名和密码，即可远程
+
+<div  align="center">    
+<img src="images/NX_screenshot.png" width = "1057" height = "600" alt="NX桌面截图" align=center />
+</div>
+
 ### 1.3 用户计算作业管理基本操作
 
 abhpc 使用Slurm系统进行计算作业管理。用户不必关注每个节点的情况，只需要告诉系统自己要运行什么程序、使用多少计算资源，Slurm系统即可自动对作业进行排队管理。以下是普通用户的常用操作介绍。
