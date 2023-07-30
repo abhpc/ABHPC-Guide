@@ -12,6 +12,8 @@
 
 * [1.普通用户](#1%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7)
   + [1.1 使用ssh客户端连接集群](#11-%E4%BD%BF%E7%94%A8ssh%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E9%9B%86%E7%BE%A4)
+    - [1.1.1 MobaXterm设置ssh登录ABHPC系统](#111-mobaxterm%E8%AE%BE%E7%BD%AEssh%E7%99%BB%E5%BD%95abhpc%E7%B3%BB%E7%BB%9F)
+    - [1.1.2 FinalShell设置ssh登录ABHPC系统](#112-finalshell%E8%AE%BE%E7%BD%AEssh%E7%99%BB%E5%BD%95abhpc%E7%B3%BB%E7%BB%9F)
   + [1.2 使用Nomachine连接图形界面](#12-%E4%BD%BF%E7%94%A8nomachine%E8%BF%9E%E6%8E%A5%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2)
   + [1.3 用户计算作业管理基本操作](#13-%E7%94%A8%E6%88%B7%E8%AE%A1%E7%AE%97%E4%BD%9C%E4%B8%9A%E7%AE%A1%E7%90%86%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
     - [1.3.1 提交作业](#131-%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A)
