@@ -119,7 +119,7 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 ***基于图形工作站的ABHPC作业管理接口GUI程序正在开发中，很快就会上线。下面是ABHPC作业系统GUI接口截图：***
 
 <div  align="center">    
-<img src="images/SL_screenshot.png" width = "600" height = "414" alt="ABHPC作业系统接口截图" align=center />
+<img src="images/SL_screenshot.png" width = "600" height = "393" alt="ABHPC作业系统接口截图" align=center />
 </div>
 
 
