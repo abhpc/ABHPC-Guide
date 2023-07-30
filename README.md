@@ -76,6 +76,17 @@ MobaXterm新建ssh连接后，按照下图设置主机IP（或域名）、用户
 
 #### 1.1.3 修改用户密码
 
+可要求管理员提供用户的初始密码（管理员参考[2.1.1 新建Linux系统用户](#211-%E6%96%B0%E5%BB%BAlinux%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7)），然后用户自行修改密码：
+```
+$ passwd
+Changing password for user james.
+Changing password for james.
+(current) UNIX password:
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+```
+先输入当前密码，然后重复输入新的密码，注意Linux下输入密码不会有任何显示（和Windows不同，Windows下输入密码一般显示为"********"）。
 
 
 ### 1.2 使用Nomachine连接图形界面
