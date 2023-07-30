@@ -41,6 +41,14 @@
 
 ### 1.1 使用ssh客户端连接集群
 
+推荐使用以下ssh客户端。
+
+Windows系统：[Xshell5](Files/Xshell5.tar.gz)和[Xftp5](Files/Xftp5.tar.gz)， [MobaXterm](https://mobaxterm.mobatek.net)
+
+MacOS系统：[FinalShell](https://www.hostbuf.com) (**付费软件，但是很便宜**)
+
+
+
 ### 1.2 使用Nomachine连接图形界面
 
 ### 1.3 用户计算作业管理基本操作
