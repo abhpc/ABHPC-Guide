@@ -98,7 +98,7 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 
 ### 1.2 使用Nomachine连接图形界面
 
-如果集群配置了远程图形工作站，可以通过远程图形工作站连接，**该技术是ABHPC独有的技术**。
+如果集群配置了远程图形工作站（**注意：图形工作站不是主节点**），可以通过远程图形工作站连接，**该技术是ABHPC独有的技术**。
 
 首先下载[Nomachine客户端](https://www.nomachine.com/product&p=NoMachine%20Enterprise%20Client)
 
@@ -108,11 +108,15 @@ ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形
 <img src="images/NX_newsession.png" width = "716" height = "450" alt="新建NX连接" align=center />
 </div>
 
-然后连接创建的Session，根据提示输入用户名和密码，即可远程
+然后连接创建的Session，根据提示输入用户名和密码，即可打开远程图形工作站桌面，进行前处理和后处理。
 
 <div  align="center">    
 <img src="images/NX_screenshot.png" width = "800" height = "453" alt="NX桌面截图" align=center />
 </div>
+
+***ABHPC的远程图形工作站基于开源和免费软件二次开发实现，带宽要求很低（4 Mb带宽即可流畅使用），可远程处理计算结果，免去了从超算中心下载数据的痛苦。也可以在图形工作站上完成建模等工作，然后直接提交算例。***
+
+***基于图形工作站的ABHPC作业管理接口GUI程序正在开发中，很快就会上线。***
 
 ### 1.3 用户计算作业管理基本操作
 
