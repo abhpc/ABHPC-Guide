@@ -54,7 +54,7 @@ ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.
 #### FinalShell设置ssh登录ABHPC系统
 
 <div  align="center">    
-<img src="images/FinalShell_newssh.jpg" width = "300" height = "300" alt="FinalShell新建ssh连接" align=center />
+<img src="images/Finalshell_newssh.jpg" width = "300" height = "300" alt="FinalShell新建ssh连接" align=center />
 </div>
 
 ### 1.2 使用Nomachine连接图形界面
