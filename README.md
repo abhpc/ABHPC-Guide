@@ -58,7 +58,7 @@ ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.
 MobaXterm新建ssh连接后，按照下图设置主机IP（或域名）、用户名、ssh端口号、最后选择导入私钥文件。在Bookmark Settings标签页可以设置连接的名称：
 
 <div  align="center">    
-<img src="images/MobaXterm_newssh.jpg" width = "674" height = "450" alt="MobaXterm新建ssh连接" align=center />
+<img src="images/MobaXterm_newssh.png" width = "674" height = "450" alt="MobaXterm新建ssh连接" align=center />
 </div>
 
 #### 1.1.2 FinalShell设置ssh登录ABHPC系统
