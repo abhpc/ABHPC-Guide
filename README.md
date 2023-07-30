@@ -484,7 +484,6 @@ Usage reported in CPU Minutes
 
 ### 2.3 常用软件的安装和注意事项
 
-
 #### 2.3.1 Gaussian 2016安装注意事项
 
 安装好以后，需要将g16目录属权归属给某一个group，例如归属给g16：
@@ -497,8 +496,3 @@ chown -Rf root:g16 g16/
 # usermod -g g16 james
 ```
 以上操作即可将james列入g16用户组。
-
-
-[配置服务器的远程MATE桌面](Admin/配置服务器的远程MATE桌面.md)
-
-[常用软件的安装](常用软件的安装)
