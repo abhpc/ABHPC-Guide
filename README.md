@@ -93,16 +93,20 @@ passwd: all authentication tokens updated successfully.
 # make -C /var/yp
 ```
 
-ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形工作站，则需要设置用户密码。
+ABHPC基于DSA密钥认证，一般是不需要密码的，但如果使用图形工作站([1.2 使用Nomachine连接图形界面](#12-%E4%BD%BF%E7%94%A8nomachine%E8%BF%9E%E6%8E%A5%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2))，则需要设置用户密码。
 
 
 ### 1.2 使用Nomachine连接图形界面
 
-如果集群配置了远程图形工作站，可以通过远程图形工作站连接，该技术是ABHPC独有的技术。
+如果集群配置了远程图形工作站，可以通过远程图形工作站连接，**该技术是ABHPC独有的技术**。
 
 首先下载[Nomachine客户端](https://www.nomachine.com/product&p=NoMachine%20Enterprise%20Client)
 
-安装好以后，
+安装好以后，Add连接：
+
+<div  align="center">    
+<img src="images/NX_newsession.png" width = "787" height = "450" alt="新建NX连接" align=center />
+</div>
 
 ### 1.3 用户计算作业管理基本操作
 
