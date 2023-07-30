@@ -137,7 +137,18 @@ $ slhist -S 2019-01-01
     17       test         A[01,03]       liq       00:30:56 RUNNING                                            /home/liq/text2/3232
 ```
 
-
+统计用户机时用```sreport```命令，例如统计2019-01-01至2023-07-31这段时间内，liq用户的机时：
+```
+$ sreport cluster AccountUtilizationByUser start=2019-01-01 end=2023-07-31 user=liq
+--------------------------------------------------------------------------------
+Cluster/Account/User Utilization 2019-01-01T00:00:00 - 2023-07-30T14:59:59 (144428400 secs)
+Usage reported in CPU Minutes
+--------------------------------------------------------------------------------
+  Cluster         Account     Login     Proper Name     Used   Energy
+--------- --------------- --------- --------------- -------- --------
+    abhpc            root       liq                    15705        0
+```
+注意这里的机时是按分钟数计算的，实际算机时还要除以60。
 
 
 ### 1.4 进阶：并行计算基础知识
