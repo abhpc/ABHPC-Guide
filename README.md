@@ -43,7 +43,7 @@
 
 推荐使用以下ssh客户端。
 
-Windows系统：[Xshell5](Files/Xshell5.tar.gz)和[Xftp5](Files/Xftp5.tar.gz)， [MobaXterm](https://mobaxterm.mobatek.net)
+Windows系统：[MobaXterm](https://mobaxterm.mobatek.net)
 
 MacOS系统：[FinalShell](https://www.hostbuf.com) (**付费软件，但是很便宜**)
 
@@ -51,7 +51,9 @@ ABHPC使用DSA登录系统，用户私钥由管理员提供（管理员参考[2.
 
 用户收到密钥后，可将密钥保存到安全的位置，一般命名为```username@host.id_dsa```，以防止多密钥时弄混。
 
-#### FinalShell设置ssh登录ABHPC系统
+#### 1.1.1 MobaXterm设置ssh登录ABHPC系统
+
+#### 1.1.2 FinalShell设置ssh登录ABHPC系统
 
 首先，新建一个ssh连接，按照下图所示顺序设置好连接名、主机IP（或域名）、ssh端口号。认证方式为“公钥”，并输入用户名。最后选择浏览，选择私钥文件。
 
