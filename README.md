@@ -20,7 +20,8 @@
     - [1.3.3 中断作业](#133-%E4%B8%AD%E6%96%AD%E4%BD%9C%E4%B8%9A)
     - [1.3.4 查看节点情况](#134-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9%E6%83%85%E5%86%B5)
     - [1.3.5 查看队列(Partition)状态](#135-%E6%9F%A5%E7%9C%8B%E9%98%9F%E5%88%97partition%E7%8A%B6%E6%80%81)
-    - [1.3.6 历史作业信息与统计](#136-%E5%8E%86%E5%8F%B2%E4%BD%9C%E4%B8%9A%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%BB%9F%E8%AE%A1)
+    - [1.3.6 清除历史作业Slurm相关文件](#136-%E6%B8%85%E9%99%A4%E5%8E%86%E5%8F%B2%E4%BD%9C%E4%B8%9Aslurm%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6)
+    - [1.3.7 历史作业信息与统计](#137-%E5%8E%86%E5%8F%B2%E4%BD%9C%E4%B8%9A%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%BB%9F%E8%AE%A1)
   + [1.4 进阶：并行计算基础知识](#14-%E8%BF%9B%E9%98%B6%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
   + [1.5 常见错误](#15-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF)
     - [1.5.1 error: Unable to allocate resources: Invalid account or account/partition combination specified](#151-error-unable-to-allocate-resources-invalid-account-or-accountpartition-combination-specified)
@@ -181,7 +182,18 @@ MXQS           up      1    48  idle     (null)           A01
 这样可以显示多少节点可用，每个节点多少核数。用户直接使用```sinfo```命令可满足大部分场景，如果有特殊需求的，请在$HOME/.bashrc文件中自定义环境变量SINFO_FORMAT。
 
 
-#### 1.3.6 历史作业信息与统计
+#### 1.3.6 清除历史作业Slurm相关文件
+
+作业完成后，一般会在目录下生成3个文件：
+```
+ID.out  ID.err  nodeList.ID
+```
+使用命令slclean可删除这三个文件：
+```
+slclean [作业ID]
+```
+
+#### 1.3.7 历史作业信息与统计
 
 ABHPC提供额外的命令```slhist```以显示历史作业，默认是显示当日的作业信息，例如：
 ```
