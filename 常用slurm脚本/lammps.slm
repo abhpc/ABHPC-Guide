@@ -18,12 +18,11 @@
 source /etc/bashrc
 module load lammps/2022.6.23
 
-
 rm -rf cfg
 mkdir cfg
 
-# 通过MPI运行LAMMPS: CPU or GPU
+# 通过MPI运行LAMMPS
 mpirun lammps-cpu -in $SLURM_JOB_NAME.in -sf omp -pk omp 1 -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta
 
-# 运行完后清理nodelist
-rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+# kokkos必须使用srun,平常CPU计算使用srun性能会稍微弱些，差约4-5%。
+# srun lammps-gpu -in $SLURM_JOB_NAME.in -sf omp -pk omp 1 -l $SLURM_JOB_NAME.log > $SLURM_JOB_NAME.sta

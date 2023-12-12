@@ -19,20 +19,5 @@
 source /etc/bashrc
 module load lsdyna/R10.1.0
 
-# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
-
-# 以下生成MPI的nodelist
-CURDIR=`pwd`
-rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
-NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
-for i in $NODES
-do
-echo "$i:$SLURM_NTASKS_PER_NODE" >> $CURDIR/nodelist.$SLURM_JOB_ID
-done
-# 生成nodelist结束
-
 # 通过MPI运行lsdyna
-mpirun -machinefile $CURDIR/nodelist.$SLURM_JOB_ID lsdyna_dp_mpp.e i=$SLURM_JOB_NAME.k > $SLURM_JOB_NAME.sta
-
-# 运行完后清理nodelist
-rm -rf $CURDIR/nodelist.$SLURM_JOB_ID
+mpirun lsdyna_dp_mpp.e i=$SLURM_JOB_NAME.k > $SLURM_JOB_NAME.sta
