@@ -183,6 +183,14 @@ MXQS           up      1    48  idle     (null)           A01
 ```
 这样可以显示多少节点可用，每个节点多少核数。用户直接使用```sinfo```命令可满足大部分场景，如果有特殊需求的，请在$HOME/.bashrc文件中自定义环境变量SINFO_FORMAT。
 
+如果不是节点独占式调用的话（即只关心空闲核数），则使用```slcores```命令查看队列情况。例如:
+```
+# slcores
+PARTITION            NODES      Total      Alloc      Idle       Other     
+E5-2678v3*           5          120        0          120        0         
+E5-2687Wv4           5          120        36         84         0         
+Gold-6246R           6          192        90         102        0
+```
 
 #### 1.3.6 清除历史作业Slurm相关文件
 
