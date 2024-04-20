@@ -37,7 +37,6 @@ echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
 
 # 创建Scratch目录
 scrdir="/tmp/scratch.$SLURM_JOB_ID"
-
 for i in $node_list
 do
     ssh $i "mkdir $scrdir"
