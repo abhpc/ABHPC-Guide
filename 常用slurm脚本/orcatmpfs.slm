@@ -1,0 +1,59 @@
+#! /bin/bash
+# 这里指定作业名称，注意vasp的输入文件无需特意指定
+#SBATCH --job-name=DEA
+
+# 提交到哪个队列（分区）
+#SBATCH --partition=MX
+
+# 使用多少个节点
+#SBATCH --nodes=2
+
+# 每个节点使用多少核
+#SBATCH --ntasks-per-node=48
+
+# 错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 指定ORCA程序路径
+source /etc/bashrc
+module load orca/5.0.4
+export OMPI_MCA_btl_openib_allow_ib=1
+export OMPI_MCA_btl_openib_if_include="mlx4_0:1"
+
+
+# 将并行核数插入INP文件
+NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
+node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)
+
+
+# bakup the origin inp
+cp $SLURM_JOB_NAME.inp $SLURM_JOB_NAME.inp.bak
+
+
+#Set the scratchlocation variable to the location of the local scratch, e.g. /scratch or /localscratch 
+tmpdir="/tmp/orca-$SLURM_JOB_ID"
+for i in $node_list
+do
+	ssh $i "mkdir $tmpdir"
+done
+
+cudir=`pwd`
+cp  $cudir/*  $tmpdir/
+
+
+# Run ORCA
+cd $tmpdir/
+sed -i '2 i end' $SLURM_JOB_NAME.inp
+sed -i '2 i nprocs '$NPROCS'' $SLURM_JOB_NAME.inp
+sed -i '2 i %pal' $SLURM_JOB_NAME.inp
+$ORCAEXE $SLURM_JOB_NAME.inp > $cudir/$SLURM_JOB_NAME.out
+
+
+# Move files to current directory
+cp $tmpdir/* $cudir/
+
+for i in $node_list
+do
+        ssh $i "rm -rf $tmpdir"
+done
