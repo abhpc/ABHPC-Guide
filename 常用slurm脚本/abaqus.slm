@@ -36,7 +36,10 @@ mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")
 echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
 
 # 创建Scratch目录
-mkdir /tmp/scratch.$SLURM_JOB_ID
+for i in $node_list
+do
+    ssh $i "mkdir /tmp/scratch.$SLURM_JOB_ID"
+done
 
 NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
 rm -rf $SLURM_JOB_NAME.lck
@@ -45,3 +48,9 @@ unset SLURM_GTIDS
 # 运行ABAQUS
 abaqus job=$SLURM_JOB_NAME input=$INPUT cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=/tmp/scratch.$SLURM_JOB_ID $ADD_ARGS int > $SLURM_JOB_NAME.log
 rm -rf $PWD/abaqus_v6.env /tmp/scratch.$SLURM_JOB_ID
+
+# 删除Scratch目录
+for i in $node_list
+do
+    ssh $i "rm -rf /tmp/scratch.$SLURM_JOB_ID"
+done
