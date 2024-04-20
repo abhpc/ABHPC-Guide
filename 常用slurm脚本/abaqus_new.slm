@@ -37,7 +37,7 @@ echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
 scrdir="/tmp/scratch.$SLURM_JOB_ID"
 for i in $node_list
 do
-    ssh $i "mkdir $scrdir"
+    ssh $i "mkdir -p $scrdir"
 done
 
 # ABAQUS计算程序参数
