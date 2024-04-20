@@ -1,12 +1,12 @@
 #! /bin/bash
-# 这里指定作业名称，这里设置为test，意味着输入文件为test.inp
-#SBATCH --job-name=Job-1
+# 这里指定作业名称，输入文件为：[作业名].inp
+#SBATCH --job-name=DEA
 
-# 提交到哪个队列（分区）,通过sinfo命令查看
+# 提交到哪个队列（分区）
 #SBATCH --partition=MX
 
 # 使用多少个节点
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 
 # 每个节点使用多少核
 #SBATCH --ntasks-per-node=48
@@ -15,16 +15,14 @@
 #SBATCH --error=%j.err
 #SBATCH --output=%j.out
 
-# 指定ABAQUS程序路径
+# 选择abaqus程序
 source /etc/bashrc
 module load abaqus/2022
 
-# 如果有子程序，通过这里定义
+# 选择其他参数，如子程序，double mode等。
 # ADD_ARGS="user=myrou.f"
 
-# 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
-
-# 生成abaqus_6.env文件，指定hosts
+# 生成abaqus_v6.env文件
 rm -rf $PWD/abaqus_v6.env
 cp $ENVFILE $PWD/abaqus_v6.env
 node_list=$(scontrol show hostname ${SLURM_NODELIST} | sort -u)
@@ -35,13 +33,14 @@ done
 mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")
 echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
 
-# 创建Scratch目录
+# 创建scratch目录
 scrdir="/tmp/scratch.$SLURM_JOB_ID"
 for i in $node_list
 do
     ssh $i "mkdir $scrdir"
 done
 
+# ABAQUS计算程序参数
 NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
 rm -rf $SLURM_JOB_NAME.lck
 #export MPI_IC_ORDER=TCP
@@ -49,9 +48,10 @@ unset SLURM_GTIDS
 
 # 运行ABAQUS
 abaqus job=$SLURM_JOB_NAME input=$INPUT cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=$scrdir $ADD_ARGS int > $SLURM_JOB_NAME.log
-rm -rf $PWD/abaqus_v6.env /tmp/scratch.$SLURM_JOB_ID
 
-# 删除Scratch目录
+
+# 运行结束后删除临时文件
+rm -rf $PWD/abaqus_v6.env
 for i in $node_list
 do
     ssh $i "rm -rf $scrdir"
