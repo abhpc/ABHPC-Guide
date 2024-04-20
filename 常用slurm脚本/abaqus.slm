@@ -1,24 +1,25 @@
 #! /bin/bash
 # 这里指定作业名称，这里设置为test，意味着输入文件为test.inp
-#SBATCH --job-name=test
+#SBATCH --job-name=Job-1
 
 # 提交到哪个队列（分区）,通过sinfo命令查看
-#SBATCH --partition=E5-2640V4
+#SBATCH --partition=MX
 
 # 使用多少个节点
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 
 # 每个节点使用多少核
-#SBATCH --ntasks-per-node=20
+#SBATCH --ntasks-per-node=48
 
 # 错误和输出文件
 #SBATCH --error=%j.err
 #SBATCH --output=%j.out
 
 # 指定ABAQUS程序路径
-module load abaqus/6.14-2
+source /etc/bashrc
+module load abaqus/2022
 
-# 额外参数，通过这里定义，如子程序，双精度等
+# 如果有子程序，通过这里定义
 # ADD_ARGS="user=myrou.f"
 
 # 以下行如果不懂，可以不管，按默认的即可。如果你知道其含义的话，可以进行自定义修改。
@@ -35,12 +36,12 @@ mp_host_list=$(echo ${mp_host_list} | sed -e "s/,$/]/")
 echo "mp_host_list=${mp_host_list}"  >> $PWD/abaqus_v6.env
 
 # 创建Scratch目录
-mkdir scratch.$SLURM_JOB_ID
+mkdir /tmp/scratch.$SLURM_JOB_ID
 
 NPROCS=$[$SLURM_JOB_NUM_NODES*$SLURM_NTASKS_PER_NODE]
 rm -rf $SLURM_JOB_NAME.lck
 #export MPI_IC_ORDER=TCP
 unset SLURM_GTIDS
 # 运行ABAQUS
-abaqus job=$SLURM_JOB_NAME input=$INPUT cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=scratch.$SLURM_JOB_ID $ADD_ARGS int > $SLURM_JOB_NAME.log
-rm -rf $PWD/abaqus_v6.env scratch.$SLURM_JOB_ID
+abaqus job=$SLURM_JOB_NAME input=$INPUT cpus=$NPROCS ask_delete=OFF mp_mode=mpi scratch=/tmp/scratch.$SLURM_JOB_ID $ADD_ARGS int > $SLURM_JOB_NAME.log
+rm -rf $PWD/abaqus_v6.env /tmp/scratch.$SLURM_JOB_ID
