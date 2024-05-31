@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --job-name=JobName
+#SBATCH --partition=MX
+
+# 使用多少个节点
+#SBATCH --nodes=1
+
+# 每个节点进程数，注意这里设置16进程x 3 OpenMP最佳。
+#SBATCH --ntasks-per-node=16
+
+# 生成错误和输出文件
+#SBATCH --error=%j.err
+#SBATCH --output=%j.out
+
+# 使用module加载cp2k
+source /etc/bashrc
+module load cp2k/2023.2
+rm -rf $SLURM_JOB_NAME.out
+
+# 默认值是3，实测最佳值，也可根据需要修改。
+#export OMP_NUM_THREADS=3
+
+# 通过mpirun运行cp2k
+mpirun cp2k.psmp -i $SLURM_JOB_NAME.inp -o $SLURM_JOB_NAME.out
